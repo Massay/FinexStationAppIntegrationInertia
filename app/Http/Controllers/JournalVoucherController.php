@@ -22,11 +22,11 @@ class JournalVoucherController extends Controller
        
 
         $data = [];
-
-     
-
         $formData = [];
         $date = null;
+
+
+        
         if($request->filled('station_id') && $request->filled('date')){
 
             $id = trim($request->station_id);
@@ -42,7 +42,7 @@ class JournalVoucherController extends Controller
         $accounts = Account::select('Id','Name')->get();
 
         $projects = Project::select('Id',"Name")->get();
-        
+
         $stations = Station::select('station_id','name')->get();
       
         return Inertia::render('JV/Create',[
