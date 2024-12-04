@@ -27,7 +27,7 @@
                         <td class="border">{{  price.created_at }}</td>
                         <td class="flex gap-2 justify-center">
                                 <Link :href="route('prices.edit', price)">Edit</Link>
-                                <Link>Delete</Link>
+                                <Link href="#">Delete</Link>
                         </td>
                     </tr>
                 </tbody>

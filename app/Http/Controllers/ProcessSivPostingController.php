@@ -62,13 +62,9 @@ class ProcessSivPostingController extends Controller
                         'Reference' => $number
                     ]
                 );
-    
-    
-    
-                foreach ($mergeData as $itemArray) {
-    
+                foreach ($mergeData as $itemArray) {    
                     foreach ($itemArray as $item) {
-    
+
                         VoucherDep::create([
                             'AccountId' => $item['account_id'],
                             'ProjectId' => $request->project_id,
@@ -83,7 +79,6 @@ class ProcessSivPostingController extends Controller
                         ]);
                     }
                 }
-    
                 $reference->NextNum = $reference->NextNum + 1;
                 $reference->EditedBy = $userName;
                 $reference->save();

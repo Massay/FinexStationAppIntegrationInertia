@@ -37,8 +37,18 @@ Route::middleware([
 
 
     Route::get('/users', [UserController::class,'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class,'create'])->name('users.create');
+    Route::post('/users/store', [UserController::class,'store'])->name('users.store');
 
-    Route::resource('/prices', PriceController::class);
+    Route::get('/prices', [PriceController::class,'index'])->name('prices.index');
+    Route::get('/prices/create', [PriceController::class,'create'])->name('prices.create');
+    Route::post('/prices/store', [PriceController::class,'store'])->name('prices.store');
+    Route::get('/prices/{id}', [PriceController::class,'edit'])->name('prices.edit');
+    Route::post('/prices/{id}', [PriceController::class,'update'])->name('prices.update');
+
+
+
+
 
 
 

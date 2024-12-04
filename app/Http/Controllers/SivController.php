@@ -42,9 +42,6 @@ class SivController extends Controller
             $priceStructure = ['agoPrice' => $fuelPrice['ago'],'pmsPrice' => $fuelPrice['pms']];
             $formData =   ProcessAnalysisSale::process($data, "SIV",$priceStructure);
 
-
-            
-
             
         }
 
@@ -54,14 +51,14 @@ class SivController extends Controller
         $stations = Station::select('station_id', 'name')->get();
 
         return Inertia::render('SIV/Create', [
-            'stations' => $stations,
-            'data' => $data,
-            'year' => Carbon::parse($request->date)->format('Y'),
-            'formData' => $formData,
-            'projects' => $projects,
-            'filters' => $request->only(['station_id', 'date']),
-            'accounts' => $accounts,
-            'fuelPrice' => $fuelPrice
+            'stations' =>fn () =>  $stations,
+            'data' => fn () => $data,
+            'year' => fn () => Carbon::parse($request->date)->format('Y'),
+            'formData' => fn () => $formData,
+            'projects' => fn () => $projects,
+            'filters' => fn () => $request->only(['station_id', 'date']),
+            'accounts' =>fn () =>  $accounts,
+            'fuelPrice' => fn () => $fuelPrice
         ]);
     }
 }

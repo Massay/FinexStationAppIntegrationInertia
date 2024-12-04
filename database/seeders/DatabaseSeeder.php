@@ -19,5 +19,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@admin.gm',
         ]);
+
+
+        $this->call([
+            PriceSeeder::class,
+            StationTableSeeder::class
+        ]);
     }
 }

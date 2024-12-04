@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UnitPrice;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -33,7 +34,26 @@ class PriceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'year' => [
+                'required',
+                'integer'
+            ],
+            'month' => 'required',
+            'ago' => 'required',
+            'pms' => 'required'
+        ]);
+        try{
+            UnitPrice::create($request->all());
+        }catch(Exception $e){
+                return response()->json([
+                    'message'  => $e->getMessage()
+                ]);
+        }
+       
+
+        return to_route('prices.index');
+        // dd($request->all());
     }
 
     /**
@@ -60,7 +80,12 @@ class PriceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd($id);
+
+        $price = UnitPrice::findOrFail($id);
+        $price->update($request->only(['month','year','pms','go']));
+
+
+        return redirect()->back();
     }
 
     /**

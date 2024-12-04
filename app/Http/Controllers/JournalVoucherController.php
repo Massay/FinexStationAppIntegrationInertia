@@ -46,13 +46,13 @@ class JournalVoucherController extends Controller
         $stations = Station::select('station_id','name')->get();
       
         return Inertia::render('JV/Create',[
-            'stations' => $stations,
-            'data' => $data,
-            'year' => Carbon::parse($request->date)->format('Y'),
-            'formData' => $formData,
-            'projects' => $projects,
-            'filters' => $request->only(['station_id','date']),
-            'accounts' => $accounts
+            'stations' => fn () =>  $stations,
+            'data' => fn () => $data,
+            'year' => fn () => Carbon::parse($request->date)->format('Y'),
+            'formData' => fn () => $formData,
+            'projects' => fn () => $projects,
+            'filters' => fn () => $request->only(['station_id','date']),
+            'accounts' => fn () => $accounts
         ]);
     }
 }

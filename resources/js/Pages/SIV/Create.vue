@@ -40,36 +40,36 @@
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Coupon Sale</h1>
                             <!-- <h2>{{ data['sales']['coupon_sales'] }}</h2> -->
-                            <CurrencyFormat :value="data['sales']['coupon_sales']"/>
+                            <CurrencyFormat :value="data['sales']['coupon_sales']" />
 
                         </div>
                         <div class="text-center bg-emerald-700 p-4  rounded-md text-gray-100 md:text-lg">
                             <h1>Cash Sale</h1>
                             <!-- <h2>{{ data['sales']['cash_sales'] }}</h2> -->
-                            <CurrencyFormat :value="data['sales']['cash_sales']"/>
+                            <CurrencyFormat :value="data['sales']['cash_sales']" />
 
                         </div>
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Cheque Sale</h1>
                             <!-- <h2>{{ data['sales']['checks'] }}</h2> -->
-                            <CurrencyFormat :value="data['sales']['checks']"/>
+                            <CurrencyFormat :value="data['sales']['checks']" />
 
                         </div>
 
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Generator Sale</h1>
                             <!-- <h2>{{ data['sales']['generators'] }}</h2> -->
-                            <CurrencyFormat :value="data['sales']['generators']"/>
+                            <CurrencyFormat :value="data['sales']['generators']" />
                         </div>
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Vehicle(s)</h1>
                             <!-- <h2>{{ data['sales']['vehicles'] }}</h2> -->
-                            <CurrencyFormat :value="data['sales']['vehicles']"/>
+                            <CurrencyFormat :value="data['sales']['vehicles']" />
                         </div>
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Expenses</h1>
                             <!-- <h2>{{ data['sales']['expenses'] }}</h2> -->
-                            <CurrencyFormat :value="data['sales']['expenses']"/>
+                            <CurrencyFormat :value="data['sales']['expenses']" />
                         </div>
                     </div>
                 </div>
@@ -248,7 +248,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 import Select from 'primevue/select';
 import DatePicker from 'primevue/datepicker';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import CardSkeleton from '@/Components/Skeleton/CardSkeleton.vue';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useToast } from 'primevue/usetoast';
@@ -279,9 +279,14 @@ const postForm = useForm({
     date: props.filters.date || null,
     year: props.year || null,
     description: null,
-    unitPriceAgo: props.fuelPrice.ago || 0,
-    unitPricePms: props.fuelPrice.pms || 0,
+    unitPriceAgo: props.fuelPrice?.ago || 0,
+    unitPricePms: props.fuelPrice?.pms || 0,
     postings: props.formData || []
+})
+
+
+onMounted(() => {
+
 })
 
 
@@ -296,7 +301,7 @@ function finalSubmit() {
 
         },
         onSuccess: () => {
-            toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+            toast.add({ severity: 'success', summary: 'Success Created', detail: 'SIV Created Successfully', life: 3000 });
 
             postForm.reset()
 
@@ -316,6 +321,8 @@ function submit() {
         onSuccess: (data) => {
             console.info("data", data)
             postForm.postings = data.props.formData
+            postForm.unitPriceAgo = data.props.fuelPrice?.ago || 0
+            postForm.unitPricePms = data.props.fuelPrice?.pms || 0
 
         },
         onFinish: () => {
