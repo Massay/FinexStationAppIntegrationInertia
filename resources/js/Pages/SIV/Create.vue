@@ -39,32 +39,41 @@
                     <div class="grid grid-cols-2 md:grid-cols-3 items-center justify-center gap-3">
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Coupon Sale</h1>
-                            <h2>{{ data['sales']['coupon_sales'] }}</h2>
+                            <!-- <h2>{{ data['sales']['coupon_sales'] }}</h2> -->
+                            <CurrencyFormat :value="data['sales']['coupon_sales']"/>
+
                         </div>
                         <div class="text-center bg-emerald-700 p-4  rounded-md text-gray-100 md:text-lg">
                             <h1>Cash Sale</h1>
-                            <h2>{{ data['sales']['cash_sales'] }}</h2>
+                            <!-- <h2>{{ data['sales']['cash_sales'] }}</h2> -->
+                            <CurrencyFormat :value="data['sales']['cash_sales']"/>
+
                         </div>
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Cheque Sale</h1>
-                            <h2>{{ data['sales']['checks'] }}</h2>
+                            <!-- <h2>{{ data['sales']['checks'] }}</h2> -->
+                            <CurrencyFormat :value="data['sales']['checks']"/>
+
                         </div>
 
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Generator Sale</h1>
-                            <h2>{{ data['sales']['generators'] }}</h2>
+                            <!-- <h2>{{ data['sales']['generators'] }}</h2> -->
+                            <CurrencyFormat :value="data['sales']['generators']"/>
                         </div>
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Vehicle(s)</h1>
-                            <h2>{{ data['sales']['vehicles'] }}</h2>
+                            <!-- <h2>{{ data['sales']['vehicles'] }}</h2> -->
+                            <CurrencyFormat :value="data['sales']['vehicles']"/>
                         </div>
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Expenses</h1>
-                            <h2>{{ data['sales']['expenses'] }}</h2>
+                            <!-- <h2>{{ data['sales']['expenses'] }}</h2> -->
+                            <CurrencyFormat :value="data['sales']['expenses']"/>
                         </div>
                     </div>
                 </div>
-
+                <!-- {{ fuelPrice }} -->
                 <form @submit.prevent="finalSubmit" class="flex flex-col gap-4">
                     <div class="flex gap-2">
                         <div class="w-full">
@@ -106,18 +115,18 @@
                     <div class="flex gap-3">
                         <div class="w-full">
                             <label for="">Unit Price AGO</label>
-                            <input type="number" step="0.01" v-model="postForm.unitPrice" placeholder="Unit Price"
+                            <input type="number" step="0.01" v-model="postForm.unitPriceAgo" placeholder="Unit Price"
                                 class="w-full rounded-md">
                             <div v-if="postForm.errors">
-                                <p class="text-red-900">{{ postForm.errors.unitPrice }}</p>
+                                <p class="text-red-900">{{ postForm.errors.unitPriceAgo }}</p>
                             </div>
                         </div>
                         <div class="w-full">
                             <label for="">Unit Price PMS</label>
-                            <input type="number" step="0.01" v-model="postForm.unitPrice" placeholder="Unit Price"
+                            <input type="number" step="0.01" v-model="postForm.unitPricePms" placeholder="Unit Price"
                                 class="w-full rounded-md">
                             <div v-if="postForm.errors">
-                                <p class="text-red-900">{{ postForm.errors.unitPrice }}</p>
+                                <p class="text-red-900">{{ postForm.errors.unitPricePms }}</p>
                             </div>
                         </div>
                     </div>
@@ -243,7 +252,7 @@ import { ref } from 'vue';
 import CardSkeleton from '@/Components/Skeleton/CardSkeleton.vue';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useToast } from 'primevue/usetoast';
-
+import CurrencyFormat from '@/Components/CurrencyFormat.vue';
 const toast = useToast();
 
 const props = defineProps({
@@ -253,7 +262,8 @@ const props = defineProps({
     formData: Array,
     accounts: Array,
     projects: Array,
-    year: String
+    year: String,
+    fuelPrice: Object
 })
 
 const form = useForm({
@@ -269,7 +279,8 @@ const postForm = useForm({
     date: props.filters.date || null,
     year: props.year || null,
     description: null,
-    unitPrice: 0,
+    unitPriceAgo: props.fuelPrice.ago || 0,
+    unitPricePms: props.fuelPrice.pms || 0,
     postings: props.formData || []
 })
 

@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('month');
             $table->integer('year');
-            $table->unique(['name','year']);
+            $table->unique(['month','year']);
+            $table->decimal('ago');
+            $table->decimal('pms');
             $table->timestamps();
         });
     }

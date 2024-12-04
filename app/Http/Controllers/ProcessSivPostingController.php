@@ -24,7 +24,11 @@ class ProcessSivPostingController extends Controller
                 'date' => 'required',
                 'description' => 'required',
                 'postings' => 'required',
-                'unitPrice' => [
+                'unitPriceAgo' => [
+                    'required',
+                    'gt:0'
+                ],
+                'unitPricePms' => [
                     'required',
                     'gt:0'
                 ]

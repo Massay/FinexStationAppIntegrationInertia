@@ -32,6 +32,7 @@
 
 
             <div class="p-4" v-if="!form.processing && data && data['sales'] != null">
+               
                 <div class="my-2">
                     <h1 class="text-center">Summary Information of Data</h1>
                     <div class="grid grid-cols-3 items-center justify-center gap-3">
@@ -214,7 +215,8 @@ const props = defineProps({
     formData: Array,
     accounts: Array,
     projects: Array,
-    year: String
+    year: String,
+    
 })
 
 const form = useForm({

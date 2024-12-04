@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\JournalVoucherController;
+use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProcessJVPostingController;
 use App\Http\Controllers\ProcessSivPostingController;
 use App\Http\Controllers\SivController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,6 +34,14 @@ Route::middleware([
 
     Route::get('/jv', [JournalVoucherController::class,'create'])->name('jv');
     Route::post('/jv/process', ProcessJVPostingController::class)->name('jv.process');
+
+
+    Route::get('/users', [UserController::class,'index'])->name('users.index');
+
+    Route::resource('/prices', PriceController::class);
+
+
+
 
 
 });
