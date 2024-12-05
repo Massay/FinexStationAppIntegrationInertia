@@ -58,6 +58,14 @@ function handleImageError() {
                         </template>
                     </nav>
                 </header>
+                <div class="flex justify-center items-center flex-col">
+                        <Link class="bg-emerald-500 px-8 py-2 text-gray-100" v-if="$page.props.auth && $page.props.auth.user" :href="route('dashboard')">Dashboard</Link>
+                        <div v-if="$page.props.auth && $page.props.auth.user">
+                            Logged in as {{ $page.props.auth.user.email }}
+                        </div>
+                    
+                </div>
         </div>
     </div>
 </template>
+
