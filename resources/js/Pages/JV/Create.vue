@@ -183,7 +183,7 @@
 
                     <div class="flex justify-end">
                         <button :disabled="postForm.processing"
-                            class="bg-emerald-700 text-gray-100 font-extrabold px-8 py-2">Submit</button>
+                            class=" text-gray-100 font-extrabold px-8 py-2" :class="{'bg-yellow-100': postForm.processing, 'bg-emerald-700': !postForm.processing}">{{ postForm.processing ? 'Loading':'Submit' }}</button>
                     </div>
                     <ProgressSpinner v-if="postForm.processing" />
 
@@ -245,9 +245,10 @@ function finalSubmit() {
         onFinish: () => {
 
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
-
+            props.data = []
+            form.reset()
             postForm.reset()
 
         },

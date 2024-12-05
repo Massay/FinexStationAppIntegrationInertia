@@ -33,7 +33,8 @@ class JournalVoucherController extends Controller
             $date = Carbon::parse($request->date);
             $data = $this->fuelPumpApiConnector->getDataByStation($id, $date);
 
-            $formData =   ProcessAnalysisSale::process($data);
+            // $priceStructure = ['agoPrice' => $fuelPrice['ago'],'pmsPrice' => $fuelPrice['pms']];
+            $formData =   ProcessAnalysisSale::process($data,"JV",[],$data['price']);
 
         }
 

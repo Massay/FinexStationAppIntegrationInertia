@@ -74,6 +74,9 @@
                     </div>
                 </div>
                 <!-- {{ fuelPrice }} -->
+                <div>
+                    {{ postForm.errors }}
+                </div>
                 <form @submit.prevent="finalSubmit" class="flex flex-col gap-4">
                     <div class="flex gap-2">
                         <div class="w-full">
@@ -229,7 +232,7 @@
 
                     <div class="flex justify-end">
                         <button type="submit" :disabled="postForm.processing"
-                            class="bg-emerald-700 text-gray-100 font-extrabold px-8 py-2">Submit</button>
+                            class="bg-emerald-700 text-gray-100 font-extrabold px-8 py-2">{{ postForm.processing ? 'Loading':'Submit' }}</button>
                     </div>
                     <ProgressSpinner v-if="postForm.processing" />
 
@@ -302,7 +305,8 @@ function finalSubmit() {
         },
         onSuccess: () => {
             toast.add({ severity: 'success', summary: 'Success Created', detail: 'SIV Created Successfully', life: 3000 });
-
+            props.data = []
+            form.reset()
             postForm.reset()
 
         },
