@@ -33,40 +33,40 @@
 
 
             <div class="p-4" v-if="!form.processing && data && data['sales'] != null">
-                <div class="my-2">
+                <div class="my-2 max-w-6xl mx-auto">
                     <!-- {{ data}} -->
                     <h1 class="text-center text-lg font-medium p-2 leading-8">Summary Information of Data</h1>
                     <div class="grid grid-cols-2 md:grid-cols-3 items-center justify-center gap-3">
-                        <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
+                        <div class="text-center bg-sky-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Coupon Sale</h1>
                             <!-- <h2>{{ data['sales']['coupon_sales'] }}</h2> -->
                             <CurrencyFormat :value="data['sales']['coupon_sales']" />
 
                         </div>
-                        <div class="text-center bg-emerald-700 p-4  rounded-md text-gray-100 md:text-lg">
+                        <div class="text-center bg-sky-700 p-4  rounded-md text-gray-100 md:text-lg">
                             <h1>Cash Sale</h1>
                             <!-- <h2>{{ data['sales']['cash_sales'] }}</h2> -->
                             <CurrencyFormat :value="data['sales']['cash_sales']" />
 
                         </div>
-                        <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
+                        <div class="text-center bg-sky-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Cheque Sale</h1>
                             <!-- <h2>{{ data['sales']['checks'] }}</h2> -->
                             <CurrencyFormat :value="data['sales']['checks']" />
 
                         </div>
 
-                        <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
+                        <div class="text-center bg-sky-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Generator Sale</h1>
                             <!-- <h2>{{ data['sales']['generators'] }}</h2> -->
                             <CurrencyFormat :value="data['sales']['generators']" />
                         </div>
-                        <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
+                        <div class="text-center bg-sky-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Vehicle(s)</h1>
                             <!-- <h2>{{ data['sales']['vehicles'] }}</h2> -->
                             <CurrencyFormat :value="data['sales']['vehicles']" />
                         </div>
-                        <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
+                        <div class="text-center bg-sky-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Expenses</h1>
                             <!-- <h2>{{ data['sales']['expenses'] }}</h2> -->
                             <CurrencyFormat :value="data['sales']['expenses']" />
@@ -81,7 +81,7 @@
                     <p class="text-gray-100 font-extralight">{{ postForm.errors.date }}</p>
                     <p class="text-gray-100 font-extralight">{{ postForm.errors.year }}</p>
                 </div>
-                <form @submit.prevent="finalSubmit" class="flex flex-col gap-4">
+                <form @submit.prevent="finalSubmit" class="flex flex-col gap-4 max-w-[90%] mx-auto text-sm">
                     <div class="flex gap-2">
                         <div class="w-full">
                             <label for="">Batch Number</label>
@@ -144,7 +144,7 @@
                             <p class="text-red-900">{{ postForm.errors.description }}</p>
                         </div>
                     </div>
-                    <div class="w-full">
+                    <div class="w-full" v-if="!postForm.processing">
                         <table class="w-full">
                             <thead class="bg-emerald-500 text-gray-50">
                                 <tr>
@@ -236,8 +236,10 @@
 
                     <div class="flex justify-end">
                         <button type="submit" :disabled="postForm.processing"
-                            class="bg-emerald-700 text-gray-100 font-extrabold px-8 py-2">{{ postForm.processing ?
-                            'Loading':'Submit' }}</button>
+                            class="bg-emerald-700 text-gray-100 font-extrabold px-8 py-2">
+                            {{ postForm.processing ?
+                                'Loading' : 'Submit' }}
+                        </button>
                     </div>
                     <ProgressSpinner v-if="postForm.processing" />
 
@@ -310,9 +312,10 @@ function finalSubmit() {
         },
         onSuccess: () => {
             toast.add({ severity: 'success', summary: 'Success Created', detail: 'SIV Created Successfully', life: 3000 });
-            props.data = []
+            props.data = null
             form.reset()
-            postForm.reset()
+            postForm.reset();
+            postForm.postings = []
 
         },
         onError: (error) => {
@@ -332,6 +335,8 @@ function submit() {
             postForm.postings = data.props.formData
             postForm.unitPriceAgo = data.props.fuelPrice?.ago || 0
             postForm.unitPricePms = data.props.fuelPrice?.pms || 0
+
+            data = null
 
         },
         onFinish: () => {
