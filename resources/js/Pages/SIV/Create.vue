@@ -74,8 +74,12 @@
                     </div>
                 </div>
                 <!-- {{ fuelPrice }} -->
-                <div>
-                    {{ postForm.errors }}
+                <div v-if="postForm.errors && Object.keys(postForm.errors).length" class="py-4 border bg-red-500 px-2">
+                    <p class="text-gray-100 font-extralight">{{ postForm.errors.batchNumber }}</p>
+                    <p class="text-gray-100 font-extralight">{{ postForm.errors.project_id }}</p>
+                    <p class="text-gray-100 font-extralight">{{ postForm.errors.description }}</p>
+                    <p class="text-gray-100 font-extralight">{{ postForm.errors.date }}</p>
+                    <p class="text-gray-100 font-extralight">{{ postForm.errors.year }}</p>
                 </div>
                 <form @submit.prevent="finalSubmit" class="flex flex-col gap-4">
                     <div class="flex gap-2">
@@ -118,16 +122,16 @@
                     <div class="flex gap-3">
                         <div class="w-full">
                             <label for="">Unit Price AGO</label>
-                            <input type="number" step="0.01" v-model="postForm.unitPriceAgo" placeholder="Unit Price"
-                                class="w-full rounded-md">
+                            <input type="number" step="0.01" disabled v-model="postForm.unitPriceAgo"
+                                placeholder="Unit Price" class="w-full rounded-md">
                             <div v-if="postForm.errors">
                                 <p class="text-red-900">{{ postForm.errors.unitPriceAgo }}</p>
                             </div>
                         </div>
                         <div class="w-full">
                             <label for="">Unit Price PMS</label>
-                            <input type="number" step="0.01" v-model="postForm.unitPricePms" placeholder="Unit Price"
-                                class="w-full rounded-md">
+                            <input type="number" step="0.01" disabled v-model="postForm.unitPricePms"
+                                placeholder="Unit Price" class="w-full rounded-md">
                             <div v-if="postForm.errors">
                                 <p class="text-red-900">{{ postForm.errors.unitPricePms }}</p>
                             </div>
@@ -232,7 +236,8 @@
 
                     <div class="flex justify-end">
                         <button type="submit" :disabled="postForm.processing"
-                            class="bg-emerald-700 text-gray-100 font-extrabold px-8 py-2">{{ postForm.processing ? 'Loading':'Submit' }}</button>
+                            class="bg-emerald-700 text-gray-100 font-extrabold px-8 py-2">{{ postForm.processing ?
+                            'Loading':'Submit' }}</button>
                     </div>
                     <ProgressSpinner v-if="postForm.processing" />
 
