@@ -119,24 +119,23 @@ class ProcessAnalysisSale
                 $averagePrice = ($actualPmsPrice + $actualAgoPrice) / 2;
 
 
-                $CouponPmsTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
-                $CouponAgoTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
-                $CashPmsTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
-                $CashAgoTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
-                $ChequePmsTotal =  ($checks > 0)  ? (($checks * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
-                $ChequeAgoTotal = ($checks > 0) ? (($checks * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
-                $GeneratorPms = ($generators_pms > 0)  ? ($generators_pms / $pmsPrice) * -1 : 0;
-                $GeneratorAgo = ($generators_ago > 0) ? ($generators_ago / $agoPrice) * -1 : 0;
-                $VehiclePms = ($vehicles_pms > 0)  ? ($vehicles_pms / $pmsPrice) * -1 : 0;
-                $VehicleAgo = ($vehicles_ago > 0) ? ($vehicles_ago / $agoPrice) * -1 : 0;
-                $ExpenseAgo = ($expenses > 0) ? $expenses * ($total_ago_sold_litres / $total_litres_sold) * -1 : 0;
-                $ExpensePms = ($expenses > 0)  ? $expenses * ($total_pms_sold_litres / $total_litres_sold) * -1 : 0;
+                $CouponPmsTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
+                $CouponAgoTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
+                $CashPmsTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
+                $CashAgoTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
+                $ChequePmsTotal =  ($checks > 0)  ? (($checks * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
+                $ChequeAgoTotal = ($checks > 0) ? (($checks * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
+                $GeneratorPms = ($generators_pms > 0)  ? ($generators_pms / $pmsPrice) * 1 : 0;
+                $GeneratorAgo = ($generators_ago > 0) ? ($generators_ago / $agoPrice) * 1 : 0;
+                $VehiclePms = ($vehicles_pms > 0)  ? ($vehicles_pms / $pmsPrice) * 1 : 0;
+                $VehicleAgo = ($vehicles_ago > 0) ? ($vehicles_ago / $agoPrice) * 1 : 0;
+                $ExpenseAgo = ($expenses > 0) ? $expenses * ($total_ago_sold_litres / $total_litres_sold) * 1 : 0;
+                $ExpensePms = ($expenses > 0)  ? $expenses * ($total_pms_sold_litres / $total_litres_sold) * 1 : 0;
 
                 $formData = [
                     [
                         'id' => 1,
                         'Name' => "Cash",
-                        // 'amount' => $cash_sales,
                         'amount' => ($pmsPrice * $CashPmsTotal) + ($agoPrice * $CashAgoTotal),
                         'pms_amount' => $CashPmsTotal,
                         'ago_amount' => $CashAgoTotal,
@@ -171,7 +170,6 @@ class ProcessAnalysisSale
                 $formData[] = [
                     'id' => 4,
                     'Name' => "generators",
-                    // 'amount' => $generators,
                     'amount' => ($pmsPrice * $GeneratorPms) + ($agoPrice * $GeneratorAgo),
                     'pms_amount' => $GeneratorPms,
                     'ago_amount' => $GeneratorAgo,

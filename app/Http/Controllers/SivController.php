@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\FuelPump\FuelPumpApiConnector;
 use App\Actions\FuelPump\ProcessAnalysisSale;
 use App\Models\Account;
+use App\Models\Branch;
 use App\Models\Project;
 use App\Models\Station;
 use App\Models\UnitPrice;
@@ -49,6 +50,7 @@ class SivController extends Controller
         $accounts = Account::select('Id', 'Name')->get();
         $projects = Project::select('Id', "Name")->get();
         $stations = Station::select('station_id', 'name')->get();
+        $branches = Branch::select('Id','Name')->get();
 
         return Inertia::render('SIV/Create', [
             'stations' =>fn () =>  $stations,
@@ -58,7 +60,8 @@ class SivController extends Controller
             'projects' => fn () => $projects,
             'filters' => fn () => $request->only(['station_id', 'date']),
             'accounts' =>fn () =>  $accounts,
-            'fuelPrice' => fn () => $fuelPrice
+            'fuelPrice' => fn () => $fuelPrice,
+            'branches' =>  fn () => $branches,
         ]);
     }
 }

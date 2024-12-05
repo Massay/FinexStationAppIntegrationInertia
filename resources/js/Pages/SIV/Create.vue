@@ -99,6 +99,15 @@
                                 <p class="text-red-900">{{ postForm.errors.project_id }}</p>
                             </div>
                         </div>
+
+                        <div class="w-full">
+                            <label for="">Branch</label>
+                            <Select v-model="postForm.branch_id" :options="branches" optionLabel="Name"
+                                optionValue="Id" placeholder="Select a Project" class="w-full rounded-md" />
+                            <div v-if="postForm.errors">
+                                <p class="text-red-900">{{ postForm.errors.branch_id }}</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="flex gap-2">
@@ -273,7 +282,8 @@ const props = defineProps({
     accounts: Array,
     projects: Array,
     year: String,
-    fuelPrice: Object
+    fuelPrice: Object,
+    branches: Array
 })
 
 const form = useForm({
@@ -286,6 +296,7 @@ const form = useForm({
 const postForm = useForm({
     batchNumber: null,
     project_id: null,
+    branch_id: null,
     date: props.filters.date || null,
     year: props.year || null,
     description: null,
