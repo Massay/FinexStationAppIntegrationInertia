@@ -40,7 +40,7 @@ class SivController extends Controller
             $month = $date->month;
             $fuelPrice = UnitPrice::where('month',$month)->where('year', $year)->first();
             $priceStructure = ['agoPrice' => $fuelPrice['ago'],'pmsPrice' => $fuelPrice['pms']];
-            $formData =   ProcessAnalysisSale::process($data, "SIV",$priceStructure);
+            $formData =   ProcessAnalysisSale::process($data, "SIV",$priceStructure,$data['price']);
 
             
         }

@@ -34,7 +34,7 @@
 
             <div class="p-4" v-if="!form.processing && data && data['sales'] != null">
                 <div class="my-2">
-                    <!-- {{ data['sales']}} -->
+                    <!-- {{ data}} -->
                     <h1 class="text-center text-lg font-medium p-2 leading-8">Summary Information of Data</h1>
                     <div class="grid grid-cols-2 md:grid-cols-3 items-center justify-center gap-3">
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">

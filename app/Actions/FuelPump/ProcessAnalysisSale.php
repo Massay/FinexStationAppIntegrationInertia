@@ -5,10 +5,10 @@ namespace App\Actions\FuelPump;
 
 class ProcessAnalysisSale
 {
-    public static function process($data, $type = "JV", $priceStructure = [])
+    public static function process($data, $type = "JV", $priceStructure = [], $actualPrice)
     {
 
-        // dd($priceStructure);
+        // dd($actualPrice);
 
         $coupon_sales = 0.0;
         $cash_sales =  0.0;
@@ -113,15 +113,18 @@ class ProcessAnalysisSale
 
                 $agoPrice = $priceStructure['agoPrice'];
                 $pmsPrice = $priceStructure['pmsPrice'];
-                $averagePrice = ($agoPrice + $pmsPrice) / 2;
+
+                $actualPmsPrice = $actualPrice['pms_price'];
+                $actualAgoPrice = $actualPrice['ago_price'];
+                $averagePrice = ($actualPmsPrice + $actualAgoPrice) / 2;
 
 
-                $CouponPmsTotal = ($coupon_sales > 0) ? ($coupon_sales * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice * -1 : 0;
-                $CouponAgoTotal = ($coupon_sales > 0) ? ($coupon_sales * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice * -1 : 0;
-                $CashPmsTotal =  ($cash_sales > 0) ? ($cash_sales *  ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice * -1 : 0;
-                $CashAgoTotal =  ($cash_sales > 0) ? ($cash_sales *  ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice * -1 : 0;
-                $ChequePmsTotal =  ($checks > 0)  ? ($checks * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice * -1 : 0;
-                $ChequeAgoTotal = ($checks > 0) ? ($checks * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice * -1 : 0;
+                $CouponPmsTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
+                $CouponAgoTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
+                $CashPmsTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
+                $CashAgoTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
+                $ChequePmsTotal =  ($checks > 0)  ? (($checks * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
+                $ChequeAgoTotal = ($checks > 0) ? (($checks * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * -1 : 0;
                 $GeneratorPms = ($generators_pms > 0)  ? ($generators_pms / $pmsPrice) * -1 : 0;
                 $GeneratorAgo = ($generators_ago > 0) ? ($generators_ago / $agoPrice) * -1 : 0;
                 $VehiclePms = ($vehicles_pms > 0)  ? ($vehicles_pms / $pmsPrice) * -1 : 0;
