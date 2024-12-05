@@ -18,9 +18,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        if(!auth()->user()->is_admin){
-            abort(401);
-        }
+        // if(!auth()->user()->is_admin){
+        //     abort(401);
+        // }
         $users = User::all();
          return Inertia::render('Users/Index',compact('users'));
 
@@ -31,9 +31,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        if(!auth()->user()->is_admin){
-            abort(401);
-        }
+        // if(!auth()->user()->is_admin){
+        //     abort(401);
+        // }
          return Inertia::render('Users/Create');
     }
 
@@ -43,9 +43,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        if(!auth()->user()->is_admin){
-            abort(401);
-        }
+        // if(!auth()->user()->is_admin){
+        //     abort(401);
+        // }
         
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -78,7 +78,10 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        return Inertia::render('Users/Edit',[
+            'user' => $user
+        ]);
     }
 
     /**
@@ -86,7 +89,9 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+
+        $user->update($request->only(['email','name','is_admin','is_siv','is_jv']));
     }
 
     /**

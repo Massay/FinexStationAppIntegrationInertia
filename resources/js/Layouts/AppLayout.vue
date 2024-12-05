@@ -50,19 +50,19 @@ const logout = () => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink  :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('jv')" :active="route().current('jv')">
+                                <NavLink v-if="$page.props.auth.user.is_admin || $page.props.auth.user.is_jv" :href="route('jv')" :active="route().current('jv')">
                                     JV
                                 </NavLink>
-                                <NavLink :href="route('siv')" :active="route().current('siv')">
+                                <NavLink v-if="$page.props.auth.user.is_admin || $page.props.auth.user.is_siv" :href="route('siv')" :active="route().current('siv')">
                                     SIV
                                 </NavLink>
-                                <NavLink :href="route('users.index')" :active="route().current('users.index')">
+                                <NavLink v-if="$page.props.auth.user.is_admin" :href="route('users.index')" :active="route().current('users.index')">
                                     Users
                                 </NavLink>
-                                <NavLink :href="route('prices.index')" :active="route().current('prices.index')">
+                                <NavLink v-if="$page.props.auth.user.is_admin" :href="route('prices.index')" :active="route().current('prices.index')">
                                     Prices
                                 </NavLink>
                             </div>

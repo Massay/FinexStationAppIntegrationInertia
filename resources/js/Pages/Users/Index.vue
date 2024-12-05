@@ -24,8 +24,7 @@
                         <td class="border">{{  user.email  }}</td>
                         <td class="border">
                             <div class="flex justify-center items-center gap-3">
-                                <Link href="#">Roles</Link>
-                                <Link href="#">Edit</Link>
+                                <Link :href="route('users.edit', user)">Edit</Link>
                                 <Link href="#">Delete</Link>
                             </div>
                         </td>
