@@ -8,8 +8,6 @@ class ProcessAnalysisSale
     public static function process($data, $type = "JV", $priceStructure = [], $actualPrice)
     {
 
-        // dd($actualPrice);
-
         $coupon_sales = 0.0;
         $cash_sales =  0.0;
         $checks =  0.0;

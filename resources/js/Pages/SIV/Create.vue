@@ -267,12 +267,14 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 import Select from 'primevue/select';
 import DatePicker from 'primevue/datepicker';
-import { onMounted, ref } from 'vue';
+import { onMounted, getCurrentInstance } from 'vue';
 import CardSkeleton from '@/Components/Skeleton/CardSkeleton.vue';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useToast } from 'primevue/usetoast';
 import CurrencyFormat from '@/Components/CurrencyFormat.vue';
 const toast = useToast();
+
+
 
 const props = defineProps({
     stations: Array,
@@ -292,9 +294,11 @@ const form = useForm({
 })
 
 
+const { proxy } = getCurrentInstance();
+
 
 const postForm = useForm({
-    batchNumber: null,
+    batchNumber: proxy.$page.props.auth.user.batchName,
     project_id: null,
     branch_id: null,
     date: props.filters.date || null,

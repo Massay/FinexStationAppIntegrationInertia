@@ -31,7 +31,8 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'is_jv',
-        'is_siv'
+        'is_siv',
+        'batchName'
     ];
 
     /**

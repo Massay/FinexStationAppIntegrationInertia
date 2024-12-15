@@ -15,7 +15,7 @@ defineProps({
     phpVersion: {
         type: String,
         required: true,
-    },
+    }
 });
 
 function handleImageError() {
@@ -30,7 +30,7 @@ function handleImageError() {
     <Head title="Welcome" />
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
         <div class="min-h-screen flex flex-col  items-center w-full selection:bg-[#FF2D20] selection:text-white">
-            <header class="w-full p-2">
+            <header class="w-full p-2 bg-emerald-600">
                     <nav v-if="canLogin" class="flex  justify-end">
                         <Link
                             v-if="$page.props.auth.user"
@@ -57,12 +57,13 @@ function handleImageError() {
                             </Link>
                         </template>
                     </nav>
-                </header>
+            </header>
                 <div class="flex justify-center items-center flex-col">
                         <Link class="bg-emerald-500 px-8 py-2 text-gray-100" v-if="$page.props.auth && $page.props.auth.user" :href="route('dashboard')">Dashboard</Link>
                         <div v-if="$page.props.auth && $page.props.auth.user">
                             Logged in as {{ $page.props.auth.user.email }}
                         </div>
+                        <img src="/images/gnpc.jpg" alt="" class="h-60 w-auto mt-4 rounded-sm">
                     
                 </div>
         </div>

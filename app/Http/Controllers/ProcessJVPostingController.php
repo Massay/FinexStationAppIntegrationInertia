@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\FuelPump\MergePostingData;
 use App\Models\Account;
 use App\Models\AutoNum;
+use App\Models\SaleTransaction;
 use App\Models\Voucher;
 use App\Models\VoucherDep;
 use Carbon\Carbon;
@@ -121,6 +122,15 @@ class ProcessJVPostingController extends Controller
 
             $reference = AutoNum::where('Id', 'JV')->first();
             $number = $reference->Prefix . ($reference->NextNum + 1);
+
+            // 'type','sale_id','source_station_id','reference','user_id']
+            SaleTransaction::create([
+                'type' => 'JV',
+                'sale_id' => 1,
+                'source_station_id'=> 1,
+                'reference' => $reference,
+                'user_id'=> auth()->id()
+            ]);
 
 
             Voucher::create(
