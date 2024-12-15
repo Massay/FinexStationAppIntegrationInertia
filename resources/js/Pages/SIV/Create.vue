@@ -285,7 +285,8 @@ const props = defineProps({
     projects: Array,
     year: String,
     fuelPrice: Object,
-    branches: Array
+    branches: Array,
+    selectedStation: Object
 })
 
 const form = useForm({
@@ -350,6 +351,9 @@ function submit() {
             postForm.postings = data.props.formData
             postForm.unitPriceAgo = data.props.fuelPrice?.ago || 0
             postForm.unitPricePms = data.props.fuelPrice?.pms || 0
+
+            postForm.project_id = data.props.selectedStation['project_id']
+            postForm.branch_id = data.props.selectedStation['branch_id']
 
             data = null
 

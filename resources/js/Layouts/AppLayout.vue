@@ -65,6 +65,9 @@ const logout = () => {
                                 <NavLink v-if="$page.props.auth.user.is_admin" :href="route('prices.index')" :active="route().current('prices.index')">
                                     Prices
                                 </NavLink>
+                                <NavLink v-if="$page.props.auth.user.is_admin" :href="route('stations.index')" :active="route().current('stations.index')">
+                                    Station Config
+                                </NavLink>
                             </div>
                         </div>
 

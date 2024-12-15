@@ -8,6 +8,9 @@
             </h2>
         </template>
         <div class="max-w-[87%] mx-auto py-8">
+            <!-- {{  selectedStation  }} -->
+               <!-- {{  selectedStation }} -->
+               <!-- {{ postForm }} -->
             <form @submit.prevent="submit" class="flex items-center justify-center gap-4 py-8">
                 <div>
                     <DatePicker v-model="form.date" placeholder="Pick a Date" showIcon fluid iconDisplay="input"
@@ -200,7 +203,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 import Select from 'primevue/select';
 import DatePicker from 'primevue/datepicker';
-import { ref, getCurrentInstance } from 'vue';
+import { ref, getCurrentInstance, onMounted } from 'vue';
 import CardSkeleton from '@/Components/Skeleton/CardSkeleton.vue';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useToast } from 'primevue/usetoast';
@@ -215,6 +218,8 @@ const props = defineProps({
     accounts: Array,
     projects: Array,
     year: String,
+    project_id: String,
+    selectedStation: Object
     
 })
 
@@ -228,7 +233,7 @@ const { proxy } = getCurrentInstance();
 
 const postForm = useForm({
     batchNumber: proxy.$page.props.auth.user.batchName,
-    project_id: null,
+    project_id: props.project_id,
     date: props.filters.date || null,
     year: props.year || null,
     description: null,
@@ -236,12 +241,17 @@ const postForm = useForm({
 })
 
 
+onMounted(() => {
+    // if(props.selectedStation)
+    //         postForm.project_id = props.selectedStation.project_id 
+})
+
 
 
 function finalSubmit() {
     postForm.post(route('jv.process'), {
         onStart: () => {
-
+        
         },
         onFinish: () => {
 
@@ -267,6 +277,7 @@ function submit() {
         onSuccess: (data) => {
             console.info("data", data)
             postForm.postings = data.props.formData
+            postForm.project_id = data.props.project_id
 
         },
         onFinish: () => {

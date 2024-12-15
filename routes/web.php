@@ -5,6 +5,7 @@ use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProcessJVPostingController;
 use App\Http\Controllers\ProcessSivPostingController;
 use App\Http\Controllers\SivController;
+use App\Http\Controllers\StationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,15 @@ Route::middleware([
     Route::get('/prices/{id}', [PriceController::class,'edit'])->name('prices.edit');
     Route::post('/prices/{id}', [PriceController::class,'update'])->name('prices.update');
 
+
+
+
+
+    Route::get('/stations', [StationController::class,'index'])->name('stations.index');
+    Route::get('/stations/create', [StationController::class,'create'])->name('stations.create');
+    Route::post('/stations/store', [StationController::class,'store'])->name('stations.store');
+    Route::get('/stations/{id}', [StationController::class,'edit'])->name('stations.edit');
+    Route::post('/stations/{id}', [StationController::class,'update'])->name('stations.update');
 
 
 

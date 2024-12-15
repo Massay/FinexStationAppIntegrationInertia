@@ -25,7 +25,7 @@ class JournalVoucherController extends Controller
         $formData = [];
         $date = null;
 
-
+        $selectedStation = null;
         
         if($request->filled('station_id') && $request->filled('date')){
 
@@ -35,6 +35,8 @@ class JournalVoucherController extends Controller
 
             // $priceStructure = ['agoPrice' => $fuelPrice['ago'],'pmsPrice' => $fuelPrice['pms']];
             $formData =   ProcessAnalysisSale::process($data,"JV",[],$data['price']);
+
+            $selectedStation = Station::where('station_id', $request->station_id)->first();
 
         }
 
@@ -48,6 +50,7 @@ class JournalVoucherController extends Controller
       
         return Inertia::render('JV/Create',[
             'stations' => fn () =>  $stations,
+            'project_id' => $selectedStation['project_id'],
             'data' => fn () => $data,
             'year' => fn () => Carbon::parse($request->date)->format('Y'),
             'formData' => fn () => $formData,
