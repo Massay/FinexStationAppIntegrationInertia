@@ -1,5 +1,9 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+
+defineProps({
+    items: Array
+})
 </script>
 
 <template>
@@ -13,7 +17,30 @@ import AppLayout from '@/Layouts/AppLayout.vue';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    
+                           
+                            <table class="w-full text-center">
+                                  <thead class="w-full">
+                                      <tr>
+                                        <th class="border">Type</th>
+                                        <th class="border">Sale Id</th>
+                                        <th class="border">Station</th>
+                                        <th class="border">reference</th>
+                                        <th class="border">user_id</th>
+                                        <th class="border">created_at</th>
+                                      </tr>
+                                  </thead>
+
+                                  <tbody>
+                                    <tr v-for="(row,index) in items.data" :key="index">
+                                        <td class="border">{{  row.type }}</td>
+                                        <td class="border">{{  row.sale_id }}</td>
+                                        <td class="border">{{  row.station_id }}</td>
+                                        <td class="border">{{  row.reference }}</td>
+                                        <td class="border">{{  row.user_id }}</td>
+                                        <td class="border">{{  row.created_at }}</td>
+                                    </tr>
+                                  </tbody>
+                            </table>
                 </div>
             </div>
         </div>

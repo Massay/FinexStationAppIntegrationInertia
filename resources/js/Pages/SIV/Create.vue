@@ -34,7 +34,7 @@
 
             <div class="p-4" v-if="!form.processing && data && data['sales'] != null">
                 <div class="my-2 max-w-6xl mx-auto">
-                    <!-- {{ data}} -->
+                    <!-- {{ data['sale_info']['id']}} -->
                     <h1 class="text-center text-lg font-medium p-2 leading-8">Summary Information of Data</h1>
                     <div class="grid grid-cols-2 md:grid-cols-3 items-center justify-center gap-3">
                         <div class="text-center bg-sky-700 p-4 rounded-md text-gray-100 md:text-lg">
@@ -305,6 +305,8 @@ const postForm = useForm({
     date: props.filters.date || null,
     year: props.year || null,
     description: null,
+    sale_id : null,
+    station_id: null,
     unitPriceAgo: props.fuelPrice?.ago || 0,
     unitPricePms: props.fuelPrice?.pms || 0,
     postings: props.formData || []
@@ -354,8 +356,12 @@ function submit() {
 
             postForm.project_id = data.props.selectedStation['project_id']
             postForm.branch_id = data.props.selectedStation['branch_id']
-
-            data = null
+            postForm.date =  data.props.filters.date
+            postForm.description = "Sales transaction"
+            postForm.sale_id = data.props.data.sale_info['id']
+            postForm.station_id = data.props.filters['station_id']
+            // postForm.station_id = data.props.filters.department_id
+            // data.data = null
 
         },
         onFinish: () => {

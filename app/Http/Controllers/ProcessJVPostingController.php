@@ -34,6 +34,9 @@ class ProcessJVPostingController extends Controller
             ]
         ]);
 
+
+        // dd($request->all());
+
         $postings = $request->postings;
 
         $mergeData = MergePostingData::merge($postings);
@@ -128,7 +131,7 @@ class ProcessJVPostingController extends Controller
                 'type' => 'JV',
                 'sale_id' => 1,
                 'source_station_id'=> 1,
-                'reference' => $reference,
+                'reference' => $number,
                 'user_id'=> auth()->id()
             ]);
 

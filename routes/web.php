@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JournalVoucherController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProcessJVPostingController;
@@ -25,9 +26,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+
+
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
     Route::get('/siv', [SivController::class,'create'])->name('siv');
     Route::post('/siv/process', ProcessSivPostingController::class)->name('siv.process');

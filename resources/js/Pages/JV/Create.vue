@@ -41,15 +41,19 @@
                     <div class="grid grid-cols-3 items-center justify-center gap-3">
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Coupon Sale</h1>
-                            <h2>{{ data['sales']['coupon_sales'] }}</h2>
+                      
+                            <CurrencyFormat :value="data['sales']['coupon_sales']"/>
+
                         </div>
                         <div class="text-center bg-emerald-700 p-4  rounded-md text-gray-100 md:text-lg">
                             <h1>Cash Sale</h1>
-                            <h2>{{ data['sales']['cash_sales'] }}</h2>
+                          
+                            <CurrencyFormat :value="data['sales']['cash_sales']"/>
                         </div>
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Cheque Sale</h1>
-                            <h2>{{ data['sales']['checks'] }}</h2>
+                          
+                            <CurrencyFormat :value="data['sales']['checks']"/>
                         </div>
                     </div>
                 </div>
@@ -207,7 +211,7 @@ import { ref, getCurrentInstance, onMounted } from 'vue';
 import CardSkeleton from '@/Components/Skeleton/CardSkeleton.vue';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useToast } from 'primevue/usetoast';
-
+import CurrencyFormat from '@/Components/CurrencyFormat.vue';
 const toast = useToast();
 
 const props = defineProps({
@@ -237,6 +241,8 @@ const postForm = useForm({
     date: props.filters.date || null,
     year: props.year || null,
     description: null,
+    sale_id: null,
+    station_id: null,
     postings: props.formData || []
 })
 
@@ -278,6 +284,10 @@ function submit() {
             console.info("data", data)
             postForm.postings = data.props.formData
             postForm.project_id = data.props.project_id
+            postForm.date = data.props.filters.date
+            postForm.description = "JV transaction"
+            postForm.sale_id = data.props.data.sale_info['id']
+            postForm.station_id = data.props.filters['station_id']
 
         },
         onFinish: () => {

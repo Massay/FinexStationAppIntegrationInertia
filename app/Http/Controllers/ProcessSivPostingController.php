@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\FuelPump\MergePostingData;
 use App\Models\AutoNum;
+use App\Models\SaleTransaction;
 use App\Models\SIV;
 use App\Models\SIVDet;
 use App\Models\Voucher;
@@ -36,6 +37,7 @@ class ProcessSivPostingController extends Controller
             ]
         ]);
 
+        // dd(vars: $request->all());
 
         $postings = $request->postings;
 
@@ -53,6 +55,15 @@ class ProcessSivPostingController extends Controller
 
                 $reference = AutoNum::where('Id', 'SIV')->latest('EditedBy')->first();
                 $number = $reference->Prefix . ($reference->NextNum + 1);
+
+
+                SaleTransaction::create([
+                    'type' => 'SIV',
+                    'sale_id' => $request->sale_id,
+                    'source_station_id'=> $request->station_id,
+                    'reference' => $number,
+                    'user_id'=> auth()->id()
+                ]);
 
                 SIV::create(
                     [
