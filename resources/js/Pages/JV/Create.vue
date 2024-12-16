@@ -11,7 +11,7 @@
             <!-- {{  selectedStation  }} -->
                <!-- {{  selectedStation }} -->
                <!-- {{ postForm }} -->
-            <form @submit.prevent="submit" class="flex items-center justify-center gap-4 py-8">
+            <form @submit.prevent.stop="submit" class="flex items-center justify-center gap-4 py-8">
                 <div>
                     <DatePicker v-model="form.date" placeholder="Pick a Date" showIcon fluid iconDisplay="input"
                         showButtonBar dateFormat="dd/mm/yy" />
@@ -58,7 +58,7 @@
                     </div>
                 </div>
 
-                <form @submit.prevent="finalSubmit" class="flex flex-col gap-4">
+                <form @submit.prevent.stop="finalSubmit" class="flex flex-col gap-4">
                     <div class="flex gap-2">
                         <div class="w-full">
                             <input type="text" required class="w-full rounded-md" v-model="postForm.batchNumber"
@@ -228,8 +228,9 @@ const props = defineProps({
 })
 
 const form = useForm({
-    date: props.filters.date || null,
-    station_id: props.filters.station_id || null
+    date: props?.filters?.date || null,
+    station_id: props?.filters?.station_id || null,
+    partial: props?.filters?.partial || false
 })
 
 const { proxy } = getCurrentInstance();
@@ -237,9 +238,9 @@ const { proxy } = getCurrentInstance();
 
 const postForm = useForm({
     batchNumber: proxy.$page.props.auth.user.batchName,
-    project_id: props.project_id,
-    date: props.filters.date || null,
-    year: props.year || null,
+    project_id: props?.project_id,
+    date: props?.filters?.date || null,
+    year: props?.year || null,
     description: null,
     sale_id: null,
     station_id: null,
@@ -247,14 +248,10 @@ const postForm = useForm({
 })
 
 
-onMounted(() => {
-    // if(props.selectedStation)
-    //         postForm.project_id = props.selectedStation.project_id 
-})
-
 
 
 function finalSubmit() {
+    form.partial = "Okay Now"
     postForm.post(route('jv.process'), {
         onStart: () => {
         
@@ -279,7 +276,11 @@ function finalSubmit() {
 
 function submit() {
     postForm.reset();
-    form.get(route('jv'), {
+    const queryParams = new URLSearchParams({ initReq: 'true' });
+
+    const url = `${route('jv')}?${queryParams.toString()}`;
+
+    form.get(url, {
         onSuccess: (data) => {
             console.info("data", data)
             postForm.postings = data.props.formData

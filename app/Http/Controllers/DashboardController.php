@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $salesTransactions = SaleTransaction::latest()->paginate(100);
+        $salesTransactions = SaleTransaction::with('user:id,email','station:id,station_id,name')->latest()->paginate(100);
         return Inertia::render('Dashboard',[
             'items' => $salesTransactions
         ]);

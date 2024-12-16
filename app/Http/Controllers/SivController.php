@@ -7,6 +7,7 @@ use App\Actions\FuelPump\ProcessAnalysisSale;
 use App\Models\Account;
 use App\Models\Branch;
 use App\Models\Project;
+use App\Models\SaleTransaction;
 use App\Models\Station;
 use App\Models\UnitPrice;
 use Carbon\Carbon;
@@ -37,12 +38,30 @@ class SivController extends Controller
             $date = Carbon::parse($request->date);
             $data = $this->fuelPumpApiConnector->getDataByStation($id, $date);
 
+
+
+            // if($request->filled('initReq')){
+            //     $currentSaleId = $data['sale_info']['id'];
+
+            //     $exists = SaleTransaction::where('type','SIV')->where('sale_id', $currentSaleId)->exists();
+    
+            //     if($exists){
+            //         abort(403,"This Sale Transaction has already being entered");
+            //     }
+            // }
+
+            // $currentSaleId = $data['sale_info']['id'];
+            // $exists = SaleTransaction::where('type','SIV')->where('sale_id', $currentSaleId)->exists();
+
+            // if($exists){
+            //     abort(403,"This Sale Transaction has already being entered");
+            // }
+
             $year = $date->year;
             $month = $date->month;
             $fuelPrice = UnitPrice::where('month',$month)->where('year', $year)->first();
             $priceStructure = ['agoPrice' => $fuelPrice['ago'],'pmsPrice' => $fuelPrice['pms']];
             $formData =   ProcessAnalysisSale::process($data, "SIV",$priceStructure,$data['price']);
-
             $selectedStation = Station::where('station_id', $request->station_id)->first();
 
             

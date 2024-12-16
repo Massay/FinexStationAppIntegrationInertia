@@ -24,9 +24,9 @@ defineProps({
                                         <th class="border">Type</th>
                                         <th class="border">Sale Id</th>
                                         <th class="border">Station</th>
-                                        <th class="border">reference</th>
-                                        <th class="border">user_id</th>
-                                        <th class="border">created_at</th>
+                                        <th class="border">Reference</th>
+                                        <th class="border">User</th>
+                                        <th class="border">Created_at</th>
                                       </tr>
                                   </thead>
 
@@ -34,9 +34,9 @@ defineProps({
                                     <tr v-for="(row,index) in items.data" :key="index">
                                         <td class="border">{{  row.type }}</td>
                                         <td class="border">{{  row.sale_id }}</td>
-                                        <td class="border">{{  row.station_id }}</td>
+                                        <td class="border">{{  row.station ? row.station.name : '-'  }}</td>
                                         <td class="border">{{  row.reference }}</td>
-                                        <td class="border">{{  row.user_id }}</td>
+                                        <td class="border">{{  row.user.email }}</td>
                                         <td class="border">{{  row.created_at }}</td>
                                     </tr>
                                   </tbody>

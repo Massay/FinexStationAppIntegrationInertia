@@ -35,7 +35,7 @@ Route::middleware([
 
 
     Route::get('/jv', [JournalVoucherController::class,'create'])->name('jv');
-    Route::post('/jv/process', ProcessJVPostingController::class)->name('jv.process');
+    Route::post('/process/jv', ProcessJVPostingController::class)->name('jv.process');
 
 
     Route::get('/users', [UserController::class,'index'])->name('users.index');

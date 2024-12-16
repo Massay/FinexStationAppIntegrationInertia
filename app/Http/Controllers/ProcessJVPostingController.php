@@ -35,7 +35,7 @@ class ProcessJVPostingController extends Controller
         ]);
 
 
-        // dd($request->all());
+       
 
         $postings = $request->postings;
 
@@ -129,10 +129,11 @@ class ProcessJVPostingController extends Controller
             // 'type','sale_id','source_station_id','reference','user_id']
             SaleTransaction::create([
                 'type' => 'JV',
-                'sale_id' => 1,
-                'source_station_id'=> 1,
+                'sale_id' => $request->sale_id,
+                'source_station_id'=> $request->station_id,
                 'reference' => $number,
                 'user_id'=> auth()->id()
+
             ]);
 
 
@@ -178,6 +179,13 @@ class ProcessJVPostingController extends Controller
             $reference->save();
 
             $mergeData = [];
+
+
+            // dd($mergeData);
+
+            // return to_route('dashboard');
+
+       
         });
     }
 }

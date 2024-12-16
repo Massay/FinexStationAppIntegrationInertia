@@ -102,8 +102,8 @@
 
                         <div class="w-full">
                             <label for="">Branch</label>
-                            <Select v-model="postForm.branch_id" :options="branches" optionLabel="Name"
-                                optionValue="Id" placeholder="Select a Project" class="w-full rounded-md" />
+                            <Select v-model="postForm.branch_id" :options="branches" optionLabel="Name" optionValue="Id"
+                                placeholder="Select a Project" class="w-full rounded-md" />
                             <div v-if="postForm.errors">
                                 <p class="text-red-900">{{ postForm.errors.branch_id }}</p>
                             </div>
@@ -305,7 +305,7 @@ const postForm = useForm({
     date: props.filters.date || null,
     year: props.year || null,
     description: null,
-    sale_id : null,
+    sale_id: null,
     station_id: null,
     unitPriceAgo: props.fuelPrice?.ago || 0,
     unitPricePms: props.fuelPrice?.pms || 0,
@@ -334,7 +334,6 @@ function finalSubmit() {
             form.reset()
             postForm.reset();
             postForm.postings = []
-
         },
         onError: (error) => {
 
@@ -347,16 +346,20 @@ function finalSubmit() {
 
 function submit() {
 
-    form.get(route('siv'), {
+
+    const queryParams = new URLSearchParams({ initReq: 'true' });
+
+    const url = `${route('siv')}?${queryParams.toString()}`;
+
+    form.get(url, {
         onSuccess: (data) => {
             console.info("data", data)
             postForm.postings = data.props.formData
             postForm.unitPriceAgo = data.props.fuelPrice?.ago || 0
             postForm.unitPricePms = data.props.fuelPrice?.pms || 0
-
             postForm.project_id = data.props.selectedStation['project_id']
             postForm.branch_id = data.props.selectedStation['branch_id']
-            postForm.date =  data.props.filters.date
+            postForm.date = data.props.filters.date
             postForm.description = "Sales transaction"
             postForm.sale_id = data.props.data.sale_info['id']
             postForm.station_id = data.props.filters['station_id']
