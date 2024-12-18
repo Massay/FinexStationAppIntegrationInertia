@@ -40,15 +40,15 @@ class SivController extends Controller
 
 
 
-            // if($request->filled('initReq')){
-            //     $currentSaleId = $data['sale_info']['id'];
+            if($request->filled('initReq')){
+                $currentSaleId = $data['sale_info']['id'];
 
-            //     $exists = SaleTransaction::where('type','SIV')->where('sale_id', $currentSaleId)->exists();
+                $exists = SaleTransaction::where('type','SIV')->where('sale_id', $currentSaleId)->exists();
     
-            //     if($exists){
-            //         abort(403,"This Sale Transaction has already being entered");
-            //     }
-            // }
+                if($exists){
+                    abort(403,"This Sale Transaction has already being entered");
+                }
+            }
 
             // $currentSaleId = $data['sale_info']['id'];
             // $exists = SaleTransaction::where('type','SIV')->where('sale_id', $currentSaleId)->exists();

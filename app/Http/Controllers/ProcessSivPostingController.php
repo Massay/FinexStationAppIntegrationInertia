@@ -37,7 +37,9 @@ class ProcessSivPostingController extends Controller
             ]
         ]);
 
-        // dd(vars: $request->all());
+
+      
+        //dd(vars: $request->all());
 
         $postings = $request->postings;
 
@@ -62,6 +64,7 @@ class ProcessSivPostingController extends Controller
                     'sale_id' => $request->sale_id,
                     'source_station_id'=> $request->station_id,
                     'reference' => $number,
+                    'date' => $request->date,
                     'user_id'=> auth()->id()
                 ]);
 
@@ -103,7 +106,7 @@ class ProcessSivPostingController extends Controller
                         'CostPrice' => floatval($costPrice),
                         'SellingPrice' => 0,
                         'CostValue' => floatval($costPrice) * floatval($item['amount']),
-                        'SalesValue' => 2,
+                        'SalesValue' => 1,
                         'TCYNet' => 1,
                         'TCYTax' => 1,
                         'TCYDiscount' => 0,
@@ -136,6 +139,11 @@ class ProcessSivPostingController extends Controller
 
             $mergeData = [];
         });
+
+
+        return to_route('siv');
+        
+        // dashboard
         //dd($request->all());
     }
 }

@@ -25,6 +25,7 @@ defineProps({
                                         <th class="border">Sale Id</th>
                                         <th class="border">Station</th>
                                         <th class="border">Reference</th>
+                                        <th class="border">Date</th>
                                         <th class="border">User</th>
                                         <th class="border">Created_at</th>
                                       </tr>
@@ -36,6 +37,7 @@ defineProps({
                                         <td class="border">{{  row.sale_id }}</td>
                                         <td class="border">{{  row.station ? row.station.name : '-'  }}</td>
                                         <td class="border">{{  row.reference }}</td>
+                                        <td class="border">{{  row.date }}</td>
                                         <td class="border">{{  row.user.email }}</td>
                                         <td class="border">{{  row.created_at }}</td>
                                     </tr>

@@ -132,6 +132,7 @@ class ProcessJVPostingController extends Controller
                 'sale_id' => $request->sale_id,
                 'source_station_id'=> $request->station_id,
                 'reference' => $number,
+                'date' => $request->date,
                 'user_id'=> auth()->id()
 
             ]);
@@ -181,11 +182,13 @@ class ProcessJVPostingController extends Controller
             $mergeData = [];
 
 
-            // dd($mergeData);
+           
 
-            // return to_route('dashboard');
 
        
         });
+
+
+        return to_route(route: 'jv');
     }
 }
