@@ -258,10 +258,6 @@ class SivDataMerger implements DataMergerInterface
 
                     $currentStockName = $itemArray[0]['name'];
 
-
-
-                   // dd($currentStockName);
-
                     $reference = AutoNum::where('Id', 'SIV')->latest('EditedBy')->first();
                     $number = $reference->Prefix . ($reference->NextNum + 1);
 
