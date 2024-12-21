@@ -56,14 +56,12 @@ class SivController extends Controller
             $month = $date->month;
             $fuelPrice = UnitPrice::where('month',$month)->where('year', $year)->first();
             $priceStructure = ['agoPrice' => $fuelPrice['ago'],'pmsPrice' => $fuelPrice['pms']];
-            // $formData =   ProcessAnalysisSale::process($data, "SIV",$priceStructure,$data['price']);
             $formData = $this->sivFuelPumpData->getFields($data, $priceStructure, $data['price']);
             $selectedStation = Station::where('station_id', $request->station_id)->first();
 
             
         }
 
-       // dd($fuelPrice);
         $accounts = Account::select('Id', 'Name')->get();
         $projects = Project::select('Id', "Name")->get();
         $stations = Station::select('station_id', 'name')->get();

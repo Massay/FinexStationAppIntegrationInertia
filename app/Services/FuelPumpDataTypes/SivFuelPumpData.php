@@ -132,12 +132,17 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
             $CashAgoTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
             $ChequePmsTotal =  ($checks > 0)  ? (($checks * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
             $ChequeAgoTotal = ($checks > 0) ? (($checks * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
-            $GeneratorPms = ($generators_pms > 0)  ? ($generators_pms / $pmsPrice) * 1 : 0;
-            $GeneratorAgo = ($generators_ago > 0) ? ($generators_ago / $agoPrice) * 1 : 0;
-            $VehiclePms = ($vehicles_pms > 0)  ? ($vehicles_pms / $pmsPrice) * 1 : 0;
-            $VehicleAgo = ($vehicles_ago > 0) ? ($vehicles_ago / $agoPrice) * 1 : 0;
-            $ExpenseAgo = ($expenses > 0) ? $expenses * ($total_ago_sold_litres / $total_litres_sold) * 1 : 0;
-            $ExpensePms = ($expenses > 0)  ? $expenses * ($total_pms_sold_litres / $total_litres_sold) * 1 : 0;
+
+            $GeneratorPms = ($generators_pms > 0)  ? ($generators_pms / $actualPmsPrice) * 1 : 0;
+            $GeneratorAgo = ($generators_ago > 0) ? ($generators_ago / $actualAgoPrice) * 1 : 0;
+
+            $VehiclePms = ($vehicles_pms > 0)  ? ($vehicles_pms / $actualPmsPrice) * 1 : 0;
+            $VehicleAgo = ($vehicles_ago > 0) ? ($vehicles_ago / $actualAgoPrice) * 1 : 0;
+
+            //$ExpenseAgo = ($expenses > 0) ? $expenses * ($total_ago_sold_litres / $total_litres_sold) * 1 : 0;
+            $ExpenseAgo = ($expenses > 0) ? (($expenses * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
+
+            $ExpensePms = ($expenses > 0)  ? (($expenses * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice ) * 1 : 0;
 
             $formData = [
                 [
