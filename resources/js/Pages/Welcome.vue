@@ -12,6 +12,9 @@ defineProps({
         type: String,
         required: true,
     },
+    appName:{
+        type: String,
+    },
     phpVersion: {
         type: String,
         required: true,
@@ -28,9 +31,9 @@ function handleImageError() {
 
 <template>
     <Head title="Welcome" />
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <div class="min-h-screen flex flex-col  items-center w-full selection:bg-[#FF2D20] selection:text-white">
-            <header class="w-full p-2 bg-emerald-600">
+    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50 h-screen">
+        <div class="h-full flex flex-col  items-center w-full selection:bg-[#FF2D20] selection:text-white">
+            <header class="w-full p-2 bg-gray-100">
                     <nav v-if="canLogin" class="flex  justify-end">
                         <Link
                             v-if="$page.props.auth.user"
@@ -58,12 +61,13 @@ function handleImageError() {
                         </template>
                     </nav>
             </header>
-                <div class="flex justify-center items-center flex-col">
+                <div class="flex justify-center items-center flex-col h-full bg-gray-200 w-full">
                         <Link class="bg-emerald-500 px-8 py-2 text-gray-100" v-if="$page.props.auth && $page.props.auth.user" :href="route('dashboard')">Dashboard</Link>
                         <div v-if="$page.props.auth && $page.props.auth.user">
                             Logged in as {{ $page.props.auth.user.email }}
                         </div>
-                        <img src="/images/gnpc.jpg" alt="" class="h-60 w-auto mt-4 rounded-sm">
+                        <img src="/images/gnpc.jpg" alt="" class="h-72 w-auto mt-4 rounded-md p-2">
+                        <h1 class="font-extrabold sm:text-2xl md:text-3xl text-lg text-green-600 font-mono">{{  appName || 'My App' }}</h1>
                     
                 </div>
         </div>
