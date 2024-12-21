@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\SaleTransaction;
 use App\Models\Station;
 use App\Models\UnitPrice;
+use App\Services\FuelPumpDataTypes\SivFuelPumpData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,7 +19,7 @@ class SivController extends Controller
 {
 
 
-    public function __construct(private FuelPumpApiConnector $fuelPumpApiConnector) {}
+    public function __construct(private SivFuelPumpData $sivFuelPumpData) {}
     public function create(Request $request)
     {
 
@@ -36,9 +37,9 @@ class SivController extends Controller
 
             $id = trim($request->station_id);
             $date = Carbon::parse($request->date);
-            $data = $this->fuelPumpApiConnector->getDataByStation($id, $date);
+            // $data = $this->fuelPumpApiConnector->getDataByStation($id, $date);
 
-
+            $data = $this->sivFuelPumpData->getData($date,$id);
 
             if($request->filled('initReq')){
                 $currentSaleId = $data['sale_info']['id'];
@@ -50,18 +51,13 @@ class SivController extends Controller
                 }
             }
 
-            // $currentSaleId = $data['sale_info']['id'];
-            // $exists = SaleTransaction::where('type','SIV')->where('sale_id', $currentSaleId)->exists();
-
-            // if($exists){
-            //     abort(403,"This Sale Transaction has already being entered");
-            // }
 
             $year = $date->year;
             $month = $date->month;
             $fuelPrice = UnitPrice::where('month',$month)->where('year', $year)->first();
             $priceStructure = ['agoPrice' => $fuelPrice['ago'],'pmsPrice' => $fuelPrice['pms']];
-            $formData =   ProcessAnalysisSale::process($data, "SIV",$priceStructure,$data['price']);
+            // $formData =   ProcessAnalysisSale::process($data, "SIV",$priceStructure,$data['price']);
+            $formData = $this->sivFuelPumpData->getFields($data, $priceStructure, $data['price']);
             $selectedStation = Station::where('station_id', $request->station_id)->first();
 
             

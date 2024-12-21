@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(FuelPumpApiConnector::class, function ($app) {
-            return  new FuelPumpApiConnector("massaybah@gmail.com","astouJ@2019");
+            return  new FuelPumpApiConnector("*****","***");
         });
     }
 

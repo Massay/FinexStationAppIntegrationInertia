@@ -8,6 +8,7 @@ use App\Models\Account;
 use App\Models\Project;
 use App\Models\SaleTransaction;
 use App\Models\Station;
+use App\Services\FuelPumpDataTypes\JvFuelPumpData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,7 +16,7 @@ use Inertia\Inertia;
 class JournalVoucherController extends Controller
 {
 
-    public function __construct(private FuelPumpApiConnector $fuelPumpApiConnector) {}
+    public function __construct(private JvFuelPumpData $jvFuelPumpData) {}
 
     public function index()
     {
@@ -39,22 +40,13 @@ class JournalVoucherController extends Controller
         $stations = Station::select('station_id', 'name')->get();
 
 
-
-
         if ($request->filled('station_id') && $request->filled('date')) {
-
-
-            // dd($request->all());
-
-            // if(!$request->partial){
-            //     $request->merge(['partial' => true]);
-            // }
-
-
 
             $id = trim($request->station_id);
             $date = Carbon::parse($request->date);
-            $data = $this->fuelPumpApiConnector->getDataByStation($id, $date);
+
+            $data = $this->jvFuelPumpData->getData($date, $id);
+
 
 
             $currentSaleId = $data['sale_info']['id'];
@@ -66,8 +58,8 @@ class JournalVoucherController extends Controller
             }
 
 
-            // $priceStructure = ['agoPrice' => $fuelPrice['ago'],'pmsPrice' => $fuelPrice['pms']];
-            $formData =   ProcessAnalysisSale::process($data, "JV", [], $data['price']);
+            $formData =   $this->jvFuelPumpData->getFields($data,[],$data['price']);
+
 
             $selectedStation = Station::where('station_id', $request->station_id)->first();
 
@@ -83,11 +75,9 @@ class JournalVoucherController extends Controller
         if ($data) {
             $request->merge(['partial' => true]);
             $requestData = $request->only(['station_id', 'date', 'partial']);
-            // return "Yes data";
         } else {
             $request->merge(['partial' => false]);
             $requestData =  $request->only(['station_id', 'date', 'partial']);
-            //return "No Data";
 
         }
 
