@@ -128,8 +128,10 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
 
             $CouponPmsTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
             $CouponAgoTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
+            
             $CashPmsTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
             $CashAgoTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
+            
             $ChequePmsTotal =  ($checks > 0)  ? (($checks * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
             $ChequeAgoTotal = ($checks > 0) ? (($checks * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
 
@@ -139,7 +141,6 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
             $VehiclePms = ($vehicles_pms > 0)  ? ($vehicles_pms / $actualPmsPrice) * 1 : 0;
             $VehicleAgo = ($vehicles_ago > 0) ? ($vehicles_ago / $actualAgoPrice) * 1 : 0;
 
-            //$ExpenseAgo = ($expenses > 0) ? $expenses * ($total_ago_sold_litres / $total_litres_sold) * 1 : 0;
             $ExpenseAgo = ($expenses > 0) ? (($expenses * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
 
             $ExpensePms = ($expenses > 0)  ? (($expenses * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice ) * 1 : 0;
@@ -148,9 +149,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 [
                     'id' => 1,
                     'Name' => "Cash",
-                    'amount' => ($pmsPrice * $CashPmsTotal) + ($agoPrice * $CashAgoTotal),
-                    'pms_amount' => $CashPmsTotal,
-                    'ago_amount' => $CashAgoTotal,
+                    'amount' => round($pmsPrice * $CashPmsTotal + $agoPrice * $CashAgoTotal,2),
+                    'pms_amount' => round($CashPmsTotal,2),
+                    'ago_amount' => round($CashAgoTotal,2),
                     'total_account_id' => "103640",
                     'ago_account_id' => "440200",
                     'pms_account_id' => "440100"
@@ -158,10 +159,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 [
                     'id' => 2,
                     'Name' => "Coupon",
-                    // 'amount' => $coupon_sales,
-                    'amount' => ($pmsPrice * $CouponPmsTotal) + ($agoPrice * $CouponAgoTotal),
-                    'pms_amount' => $CouponPmsTotal,
-                    'ago_amount' => $CouponAgoTotal,
+                    'amount' => round($pmsPrice * $CouponPmsTotal + $agoPrice * $CouponAgoTotal,2),
+                    'pms_amount' => round($CouponPmsTotal,2),
+                    'ago_amount' => round($CouponAgoTotal,2),
                     'ago_account_id' => "440200",
                     'pms_account_id' => "440100",
                     'total_account_id' => "205225",
@@ -169,51 +169,48 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 [
                     'id' => 3,
                     'Name' => "Cheques",
-                    // 'amount' => $checks,
-                    'amount' => ($pmsPrice * $ChequePmsTotal) + ($agoPrice * $ChequeAgoTotal),
-                    'pms_amount' => $ChequePmsTotal,
-                    'ago_amount' => $ChequeAgoTotal,
+                    'amount' => round($pmsPrice * $ChequePmsTotal + $agoPrice * $ChequeAgoTotal,2),
+                    'pms_amount' => round($ChequePmsTotal,2),
+                    'ago_amount' => round($ChequeAgoTotal,2),
                     'ago_account_id' => "440200",
                     'pms_account_id' => "440100",
                     'total_account_id' => "103640",
+                ],
+                [
+                    'id' => 4,
+                    'Name' => "generators",
+                    'amount' => round($pmsPrice * $GeneratorPms +  $agoPrice * $GeneratorAgo,2),
+                    'pms_amount' => round($GeneratorPms,2),
+                    'ago_amount' => round($GeneratorAgo,2),
+                    'ago_account_id' => "440200",
+                    'pms_account_id' => "440100",
+                    'total_account_id' => "103640",
+                ],
+                [
+                    'id' => 5,
+                    'Name' => "vehicles",
+                    'amount' => round($pmsPrice * $VehiclePms +  $agoPrice * $VehicleAgo,2),
+                    'pms_amount' => round($VehiclePms,2),
+                    'ago_amount' => round($VehicleAgo,2),
+                    'ago_account_id' => "440200",
+                    'pms_account_id' => "440100",
+                    'total_account_id' => "103640",
+                ],
+                [
+                    'id' => 6,
+                    'Name' => "expenses",
+                    'amount' => round($pmsPrice * $ExpensePms + $agoPrice * $ExpenseAgo,2),
+                    'pms_amount' => round($ExpensePms,2),
+                    'ago_amount' => round($ExpenseAgo,2),
+                    'ago_account_id' => "440200",
+                    'pms_account_id' => "440100",
+                    'total_account_id' => "102640",
                 ]
             ];
 
-            $formData[] = [
-                'id' => 4,
-                'Name' => "generators",
-                'amount' => ($pmsPrice * $GeneratorPms) + ($agoPrice * $GeneratorAgo),
-                'pms_amount' => $GeneratorPms,
-                'ago_amount' => $GeneratorAgo,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
-            ];
+           
 
-            $formData[] = [
-                'id' => 5,
-                'Name' => "vehicles",
-                // 'amount' => $vehicles,
-                'amount' => ($pmsPrice * $VehiclePms) + ($agoPrice * $VehicleAgo),
-
-                'pms_amount' => $VehiclePms,
-                'ago_amount' => $VehicleAgo,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
-            ];
-
-            $formData[] = [
-                'id' => 6,
-                'Name' => "expenses",
-                'amount' => ($pmsPrice * $ExpensePms) + ($agoPrice * $ExpenseAgo),
-                // 'amount' => $expenses,
-                'pms_amount' => $ExpensePms,
-                'ago_amount' => $ExpenseAgo,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
-            ];
+           
         }
 
         return $formData;
