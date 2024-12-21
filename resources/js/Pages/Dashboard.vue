@@ -17,10 +17,10 @@ defineProps({
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-gray-50 overflow-hidden shadow-xl sm:rounded-lg p-3">
 
-                    <table class="w-full text-center">
-                        <thead class="w-full">
+                    <table class="w-full text-center  rounded-md">
+                        <thead class="w-full bg-gray-500 text-gray-50">
                             <tr>
                                 <th class="border">Type</th>
                                 <th class="border">Sale Id</th>
