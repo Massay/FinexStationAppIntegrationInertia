@@ -2,9 +2,12 @@
 
 namespace App\Actions\FuelPump;
 
+use App\Contracts\FuelPumpApiInterface;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Support\Facades\Http;
 
-class FuelPumpApiConnector {
+class FuelPumpApiConnector implements FuelPumpApiInterface
+{
 
     // private static $instance;
     private $username;
@@ -16,7 +19,6 @@ class FuelPumpApiConnector {
     {
         $this->username = trim($username);
         $this->password = trim($password);
-       // $this->connect();
     }
 
 
@@ -26,7 +28,7 @@ class FuelPumpApiConnector {
         $this->password = trim($password);
     }
 
-    public function getStations():Array
+    public function getStations(): array
     {
         $response = Http::fuelPumpApp()->withToken($this->token)
             ->get("/api/get/stations");
@@ -42,19 +44,19 @@ class FuelPumpApiConnector {
     public function getDataByStation($stationId, $date)
     {
         $response = Http::fuelPumpApp()->withToken($this->token)
-            ->get("/api/get/sales-by-stations/?department_id=".$stationId.'&date='.$date);
+            ->get("/api/get/sales-by-stations/?department_id=$stationId&date=$date");
 
         if ($response->successful()) {
             return $response->json();
-        }
-        else{
-             return [];
+        } else {
+            return [];
         }
     }
 
 
-    public function getCurrentToken(){
-         return $this->token;
+    public function getCurrentToken()
+    {
+        return $this->token;
     }
     public  function connect(): array
     {
@@ -69,10 +71,7 @@ class FuelPumpApiConnector {
             $this->token_type = $response['token_type'];
             return  $response->json();
         }
-        if ($response->failed()) {
-            return $response->json();
-        }
-    }
 
-    
+        return $response->json();
+    }
 }

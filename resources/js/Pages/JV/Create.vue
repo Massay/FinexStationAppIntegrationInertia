@@ -207,7 +207,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 import Select from 'primevue/select';
 import DatePicker from 'primevue/datepicker';
-import { ref, getCurrentInstance, onMounted } from 'vue';
+import { getCurrentInstance } from 'vue';
 import CardSkeleton from '@/Components/Skeleton/CardSkeleton.vue';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useToast } from 'primevue/usetoast';
@@ -286,7 +286,7 @@ function submit() {
             postForm.postings = data.props.formData
             postForm.project_id = data.props.project_id
             postForm.date = data.props.filters.date
-            postForm.description = "JV transaction"
+            postForm.description = "Cash sales @"
             postForm.sale_id = data.props.data.sale_info['id']
             postForm.station_id = data.props.filters['station_id']
 

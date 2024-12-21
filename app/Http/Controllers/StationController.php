@@ -66,11 +66,9 @@ class StationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
+
         $station = Station::find($id);
         $station->update($request->only(['name','station_id','branch_id','project_id']));
-
-
         return to_route('stations.index');
     }
 

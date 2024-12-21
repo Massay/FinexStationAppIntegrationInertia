@@ -29,10 +29,19 @@ return Application::configure(basePath: dirname(__DIR__))
                 return Inertia::render('Error', ['status' => $response->getStatusCode()])
                     ->toResponse($request)
                     ->setStatusCode($response->getStatusCode());
-            } elseif ($response->getStatusCode() === 419) {
+            } 
+            // else if($response->getStatusCode() === 403){
+            //     return Inertia::render('Error', ['status' => $response->getStatusCode()])
+            //     ->toResponse($request)
+            //     ->setStatusCode($response->getStatusCode());
+            // }
+            elseif ($response->getStatusCode() === 419) {
                 return back()->with([
                     'message' => 'The page expired, please try again.',
                 ]);
+                // return Inertia::render('Error', ['status' => $response->getStatusCode()])
+                //     ->toResponse($request)
+                //     ->setStatusCode($response->getStatusCode());
             }
     
             return $response;
