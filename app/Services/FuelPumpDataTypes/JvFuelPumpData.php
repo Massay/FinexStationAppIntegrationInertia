@@ -76,13 +76,26 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
             $total_pms_sold_litres = $data['sales']['total_pms_sold_litres'];
             $total_ago_sold_litres = $data['sales']['total_ago_sold_litres'];
 
+            $cash_sales_pms = ($cash_sales > 0) ? $cash_sales *  ($total_pms_sold_litres / $total_litres_sold) * -1 : 0;
+            $cash_sales_ago = ($cash_sales > 0) ? $cash_sales *  ($total_ago_sold_litres / $total_litres_sold) * -1 : 0;
+
+
+            $coupon_sales_pms = ($coupon_sales > 0) ? $coupon_sales * ($total_pms_sold_litres / $total_litres_sold) * -1 : 0;
+
+            $coupon_sales_ago = ($coupon_sales > 0) ? $coupon_sales * ($total_ago_sold_litres / $total_litres_sold) * -1 : 0;
+
+
+            $checks_pms = ($checks > 0)  ? $checks * ($total_pms_sold_litres / $total_litres_sold) * -1 : 0;
+
+            $checks_ago = ($checks > 0) ? $checks * ($total_ago_sold_litres / $total_litres_sold) * -1 : 0;
+
             $formData = [
                 [
                     'id' => 1,
                     'Name' => "Cash",
                     'amount' => $cash_sales,
-                    'pms_amount' => ($cash_sales > 0) ? $cash_sales *  ($total_pms_sold_litres / $total_litres_sold) * -1 : 0,
-                    'ago_amount' => ($cash_sales > 0) ? $cash_sales *  ($total_ago_sold_litres / $total_litres_sold) * -1 : 0,
+                    'pms_amount' => round($cash_sales_pms,2),
+                    'ago_amount' => round($cash_sales_ago,2),
                     'total_account_id' => "103640",
                     'ago_account_id' => "440200",
                     'pms_account_id' => "440100"
@@ -91,8 +104,8 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
                     'id' => 2,
                     'Name' => "Coupon",
                     'amount' => $coupon_sales,
-                    'pms_amount' => ($coupon_sales > 0) ? $coupon_sales * ($total_pms_sold_litres / $total_litres_sold) * -1 : 0,
-                    'ago_amount' => ($coupon_sales > 0) ? $coupon_sales * ($total_ago_sold_litres / $total_litres_sold) * -1 : 0,
+                    'pms_amount' => round($coupon_sales_pms,2),
+                    'ago_amount' => round($coupon_sales_ago,2),
                     'ago_account_id' => "440200",
                     'pms_account_id' => "440100",
                     'total_account_id' => "205225",
@@ -101,8 +114,8 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
                     'id' => 3,
                     'Name' => "Cheques",
                     'amount' => $checks,
-                    'pms_amount' => ($checks > 0)  ? $checks * ($total_pms_sold_litres / $total_litres_sold) * -1 : 0,
-                    'ago_amount' => ($checks > 0) ? $checks * ($total_ago_sold_litres / $total_litres_sold) * -1 : 0,
+                    'pms_amount' => round( $checks_pms,2),
+                    'ago_amount' => round($checks_ago, 2),
                     'ago_account_id' => "440200",
                     'pms_account_id' => "440100",
                     'total_account_id' => "103640",
