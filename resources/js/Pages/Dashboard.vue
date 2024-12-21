@@ -46,10 +46,10 @@ defineProps({
                     <!-- {{ items.links}} -->
                     <div class="flex  justify-center gap-2 items-center p-2">
                         <template v-for="(link, index) in items.links" :key="index">
-                            <span v-if="link.url == null" class="bg-gray-100 rounded-md p-2 font-extrabold" :class="{'bg-emerald-700 text-gray-100': link.active}">
+                            <span v-if="link.url == null" class="rounded-md p-2 font-extrabold" :class="{'bg-gray-900 text-gray-100': link.active,'bg-gray-300 ': !link.active}">
                                 <span v-html="link.label"/>
                             </span>
-                            <Link  v-else  :href="link.url" class="bg-emerald-400 text-center p-2 rounded-md font-extrabold" :class="{'bg-emerald-700 text-gray-100': link.active}">
+                            <Link  v-else  :href="link.url" class=" text-gray-50 text-center p-2 rounded-md font-extrabold" :class="{'bg-gray-900 px-3 text-gray-100': link.active,'bg-gray-500': !link.active}">
                                     <span v-html="link.label"/>
                             </Link>
                         </template>

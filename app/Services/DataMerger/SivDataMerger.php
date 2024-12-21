@@ -328,7 +328,7 @@ class SivDataMerger implements DataMergerInterface
                             'LCYAmount' => floatval($item['amount']),
                             'Reference' => $number,
                             'DateCreated' => Carbon::now()->format('Y-m-d'),
-                            'CreatedBy' => $userName,
+                            'CreatedBy' => $userName
                         ]);
                     }
 
