@@ -10,28 +10,29 @@
         </template>
         <div>
             <!-- {{ form }} -->
-            <form @submit.prevent="create" id="CreateUser" class="max-w-3xl mx-auto gap-4 flex flex-col py-4">
+            <form @submit.prevent="create" autocomplete="off" id="CreateUser" class="max-w-3xl mx-auto gap-4 flex flex-col py-4">
                 <div>
-                    <input type="text" v-model="form.name" class="w-full rounded-md" placeholder="Name">
+                    <input type="text" v-model="form.name" class="w-full rounded-md" placeholder="Name" autocomplete="off">
                     <div v-if="form.errors">
                         <p class="text-red-400">{{ form.errors.name }}</p>
                     </div>
                 </div>
                 <div>
-                    <input type="text" v-model="form.email" id="MyEmail" class="w-full rounded-md" placeholder="Email">
+                    <input type="text" v-model="form.email" id="MyEmail" class="w-full rounded-md" placeholder="Email" autocomplete="off">
                     <div v-if="form.errors">
                         <p class="text-red-400">{{ form.errors.email }}</p>
                     </div>
                 </div>
                 <div>
                     <input type="password" v-model="form.password" id="MyPassword" class="w-full rounded-md"
+                    autocomplete="new-password"
                         placeholder="Password">
                     <div v-if="form.errors">
                         <p class="text-red-400">{{ form.errors.password }}</p>
                     </div>
                 </div>
                 <div>
-                    <input type="password" v-model="form.password_confirmation" class="w-full rounded-md"
+                    <input type="password" v-model="form.password_confirmation" autocomplete="off"  class="w-full rounded-md"
                         placeholder="Password Confirmation">
                     <div v-if="form.errors">
                         <p class="text-red-400">{{ form.errors.password_confirmation }}</p>
