@@ -270,13 +270,13 @@ class SivDataMerger implements DataMergerInterface
                         'date' => $request->date,
                         'user_id' => auth()->id()
                     ]);
-
+//Stock sales @ $project->Name IRO {$currentStockName} ($request->description)
                     SIV::create(
                         [
                             'IsBatched' => 1,
                             'BatchNumber' => $request->batchNumber,
                             'TxDate' => Carbon::parse($request->date)->format('Y-m-d'),
-                            'Descr' => "Stock sales @ $project->Name IRO {$currentStockName} ($request->description)",
+                            'Descr' => " Stock Sold @ $project->Name in Respect to Cash, Coupon, Cheque, Vehicle and Generator Ref: ($request->description)",
                             'TransType' => "SCSIV",
                             'Customer' => '',
                             'CurrencyId' => 'GMD',
@@ -341,7 +341,7 @@ class SivDataMerger implements DataMergerInterface
             });
 
 
-           
+
         } catch (\Throwable $e) {
             echo "Failed to create records: " . $e->getMessage();
         }

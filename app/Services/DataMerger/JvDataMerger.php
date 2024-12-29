@@ -5,6 +5,7 @@ namespace App\Services\DataMerger;
 use App\Contracts\DataMergerInterface;
 use App\Models\Account;
 use App\Models\AutoNum;
+use App\Models\Project;
 use App\Models\SaleTransaction;
 use App\Models\Voucher;
 use App\Models\VoucherDep;
@@ -124,10 +125,10 @@ class JvDataMerger implements DataMergerInterface
     public function post($request, $mergeData)
     {
 
-
+        $project = Project::where("Id", $request->project_id)->first();
 
         try {
-            DB::transaction(function () use ($request, $mergeData) {
+            DB::transaction(function () use ($request, $mergeData,$project) {
 
                 $userName = auth()->user()->name;
                 $reference = AutoNum::where('Id', 'JV')->first();
@@ -143,13 +144,13 @@ class JvDataMerger implements DataMergerInterface
 
                 ]);
 
-
+//Stock sales @ $project->Name IRO {$currentStockName} ($request->description)
                 Voucher::create(
                     [
                         'IsBatched' => 1,
                         'BatchNumber' => $request->batchNumber,
                         'TxDate' => Carbon::parse($request->date)->format('Y-m-d'),
-                        'Descr' => $request->description,
+                        'Descr' => " Cash Coupon and Cheque sales @ $project->Name Ref: ($request->description)",
                         'Ledger' => "NL",
                         'TransType' => "NLJNL",
                         'DateCreated' => Carbon::now()->format('Y-m-d'),
@@ -184,7 +185,7 @@ class JvDataMerger implements DataMergerInterface
                 $mergeData = [];
             });
 
-           
+
         } catch (\Throwable $e) {
 
             echo "Failed to create records: " . $e->getMessage();
