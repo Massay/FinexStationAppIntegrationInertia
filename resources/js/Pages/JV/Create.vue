@@ -35,24 +35,24 @@
 
 
             <div class="p-4" v-if="!form.processing && data && data['sales'] != null">
-               
+
                 <div class="my-2">
                     <h1 class="text-center">Summary Information of Data</h1>
                     <div class="grid grid-cols-3 items-center justify-center gap-3">
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Coupon Sale</h1>
-                      
+
                             <CurrencyFormat :value="data['sales']['coupon_sales']"/>
 
                         </div>
                         <div class="text-center bg-emerald-700 p-4  rounded-md text-gray-100 md:text-lg">
                             <h1>Cash Sale</h1>
-                          
+
                             <CurrencyFormat :value="data['sales']['cash_sales']"/>
                         </div>
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Cheque Sale</h1>
-                          
+
                             <CurrencyFormat :value="data['sales']['checks']"/>
                         </div>
                     </div>
@@ -224,7 +224,7 @@ const props = defineProps({
     year: String,
     project_id: String,
     selectedStation: Object
-    
+
 })
 
 const form = useForm({
@@ -254,7 +254,7 @@ function finalSubmit() {
     form.partial = "Okay Now"
     postForm.post(route('jv.process'), {
         onStart: () => {
-        
+
         },
         onFinish: () => {
 
@@ -286,7 +286,7 @@ function submit() {
             postForm.postings = data.props.formData
             postForm.project_id = data.props.project_id
             postForm.date = data.props.filters.date
-            postForm.description = "Cash sales @"
+            postForm.description = ""
             postForm.sale_id = data.props.data.sale_info['id']
             postForm.station_id = data.props.filters['station_id']
 

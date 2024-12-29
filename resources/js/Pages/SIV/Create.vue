@@ -360,7 +360,7 @@ function submit() {
             postForm.project_id = data.props.selectedStation['project_id']
             postForm.branch_id = data.props.selectedStation['branch_id']
             postForm.date = data.props.filters.date
-            postForm.description = "Sales transaction"
+            postForm.description = ""
             postForm.sale_id = data.props.data.sale_info['id']
             postForm.station_id = data.props.filters['station_id']
             // postForm.station_id = data.props.filters.department_id
