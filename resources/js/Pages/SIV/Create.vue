@@ -148,7 +148,7 @@
                     </div>
                     <div>
                         <textarea class="w-full rounded-md" rows="5" name="description" v-model="postForm.description"
-                            id="" placeholder="Description"></textarea>
+                            id="" placeholder="Enter refs here"></textarea>
                         <div v-if="postForm.errors">
                             <p class="text-red-900">{{ postForm.errors.description }}</p>
                         </div>
