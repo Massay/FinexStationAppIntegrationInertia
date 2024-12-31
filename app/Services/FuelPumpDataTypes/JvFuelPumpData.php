@@ -33,6 +33,13 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
         $coupon_sales = 0.0;
         $cash_sales =  0.0;
         $checks =  0.0;
+
+
+        $agoAccountId  = "440200"; // 440200
+        $pmsAccountId = "440100"; //440100
+        $totalAccountId = "103640";
+
+
         $formData = [
             [
                 'id' => 1,
@@ -40,9 +47,9 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
                 'amount' => $cash_sales,
                 'pms_amount' => $cash_sales,
                 'ago_amount' => $cash_sales,
-                'total_account_id' => "103640",
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100"
+                'total_account_id' => $totalAccountId,
+                'ago_account_id' => $agoAccountId,
+                'pms_account_id' => $pmsAccountId
             ],
             [
                 'id' => 2,
@@ -50,9 +57,9 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
                 'amount' => $coupon_sales,
                 'pms_amount' => $coupon_sales,
                 'ago_amount' => $coupon_sales,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
+                'ago_account_id' => $agoAccountId,
+                'pms_account_id' => $pmsAccountId,
+                'total_account_id' => $totalAccountId,
             ],
             [
                 'id' => 3,
@@ -60,9 +67,9 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
                 'amount' => $checks,
                 'pms_amount' => $checks,
                 'ago_amount' => $checks,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
+                'ago_account_id' => $agoAccountId,
+                'pms_account_id' => $pmsAccountId,
+                'total_account_id' => $totalAccountId,
             ]
         ];
 
@@ -96,9 +103,9 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
                     'amount' => $cash_sales,
                     'pms_amount' => round($cash_sales_pms,2),
                     'ago_amount' => round($cash_sales_ago,2),
-                    'total_account_id' => "103640",
-                    'ago_account_id' => "440200",
-                    'pms_account_id' => "440100"
+                    'total_account_id' => $totalAccountId,
+                    'ago_account_id' => $agoAccountId,
+                    'pms_account_id' => $pmsAccountId
                 ],
                 [
                     'id' => 2,
@@ -106,8 +113,8 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
                     'amount' => $coupon_sales,
                     'pms_amount' => round($coupon_sales_pms,2),
                     'ago_amount' => round($coupon_sales_ago,2),
-                    'ago_account_id' => "440200",
-                    'pms_account_id' => "440100",
+                    'ago_account_id' => $agoAccountId,
+                    'pms_account_id' => $pmsAccountId,
                     'total_account_id' => "205225",
                 ],
                 [
@@ -116,9 +123,9 @@ class JvFuelPumpData implements PullFuelPumpDataInterface
                     'amount' => $checks,
                     'pms_amount' => round( $checks_pms,2),
                     'ago_amount' => round($checks_ago, 2),
-                    'ago_account_id' => "440200",
-                    'pms_account_id' => "440100",
-                    'total_account_id' => "103640",
+                    'ago_account_id' => $agoAccountId,
+                    'pms_account_id' => $pmsAccountId,
+                    'total_account_id' => $totalAccountId,
                 ]
             ];
         }

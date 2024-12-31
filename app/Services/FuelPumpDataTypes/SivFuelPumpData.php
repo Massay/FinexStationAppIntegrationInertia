@@ -32,6 +32,11 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
         $vehicles = 0;
 
 
+        $agoAccountId  = "500120";
+
+        $pmsAccountId = "500110";
+
+        $totalAccountId = "103640";
 
         // Default FormData templates
         $formData = [
@@ -41,9 +46,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 'amount' => $cash_sales,
                 'pms_amount' => $cash_sales,
                 'ago_amount' => $cash_sales,
-                'total_account_id' => "103640",
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100"
+                'total_account_id' => $totalAccountId,
+                'ago_account_id' => $agoAccountId,
+                'pms_account_id' => $pmsAccountId
             ],
             [
                 'id' => 2,
@@ -51,9 +56,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 'amount' => $coupon_sales,
                 'pms_amount' => $coupon_sales,
                 'ago_amount' => $coupon_sales,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
+                'ago_account_id' => $agoAccountId,
+                'pms_account_id' => $agoAccountId,
+                'total_account_id' => $totalAccountId,
             ],
             [
                 'id' => 3,
@@ -61,9 +66,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 'amount' => $checks,
                 'pms_amount' => $checks,
                 'ago_amount' => $checks,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
+                'ago_account_id' => $agoAccountId,
+                'pms_account_id' => $agoAccountId,
+                'total_account_id' => $totalAccountId,
             ],
             [
                 'id' => 4,
@@ -71,9 +76,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 'amount' => $generators,
                 'pms_amount' => $generators,
                 'ago_amount' => $generators,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
+                'ago_account_id' => $agoAccountId,
+                'pms_account_id' => $agoAccountId,
+                'total_account_id' => $totalAccountId,
             ],
             [
                 'id' => 5,
@@ -81,9 +86,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 'amount' => $vehicles,
                 'pms_amount' => $vehicles,
                 'ago_amount' => $vehicles,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
+                'ago_account_id' => $agoAccountId,
+                'pms_account_id' => $agoAccountId,
+                'total_account_id' => $totalAccountId,
             ],
             [
                 'id' => 6,
@@ -91,9 +96,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 'amount' => $expenses,
                 'pms_amount' => $expenses,
                 'ago_amount' => $expenses,
-                'ago_account_id' => "440200",
-                'pms_account_id' => "440100",
-                'total_account_id' => "103640",
+                'ago_account_id' => $agoAccountId,
+                'pms_account_id' => $agoAccountId,
+                'total_account_id' => $totalAccountId,
             ]
         ];
 
@@ -131,10 +136,10 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
 
             $CouponPmsTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
             $CouponAgoTotal = ($coupon_sales > 0) ? (($coupon_sales * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
-            
+
             $CashPmsTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
             $CashAgoTotal =  ($cash_sales > 0) ? (($cash_sales *  ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
-            
+
             $ChequePmsTotal =  ($checks > 0)  ? (($checks * ($total_pms_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
             $ChequeAgoTotal = ($checks > 0) ? (($checks * ($total_ago_sold_litres / $total_litres_sold)) / $averagePrice) * 1 : 0;
 
@@ -155,9 +160,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'amount' => round($pmsPrice * $CashPmsTotal + $agoPrice * $CashAgoTotal,2),
                     'pms_amount' => round($CashPmsTotal,2),
                     'ago_amount' => round($CashAgoTotal,2),
-                    'total_account_id' => "103640",
-                    'ago_account_id' => "440200",
-                    'pms_account_id' => "440100"
+                    'total_account_id' => $totalAccountId,
+                    'ago_account_id' => $agoAccountId,
+                    'pms_account_id' => $agoAccountId
                 ],
                 [
                     'id' => 2,
@@ -165,8 +170,8 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'amount' => round($pmsPrice * $CouponPmsTotal + $agoPrice * $CouponAgoTotal,2),
                     'pms_amount' => round($CouponPmsTotal,2),
                     'ago_amount' => round($CouponAgoTotal,2),
-                    'ago_account_id' => "440200",
-                    'pms_account_id' => "440100",
+                    'ago_account_id' => $agoAccountId,
+                    'pms_account_id' => $agoAccountId,
                     'total_account_id' => "205225",
                 ],
                 [
@@ -175,9 +180,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'amount' => round($pmsPrice * $ChequePmsTotal + $agoPrice * $ChequeAgoTotal,2),
                     'pms_amount' => round($ChequePmsTotal,2),
                     'ago_amount' => round($ChequeAgoTotal,2),
-                    'ago_account_id' => "440200",
-                    'pms_account_id' => "440100",
-                    'total_account_id' => "103640",
+                    'ago_account_id' => $agoAccountId,
+                    'pms_account_id' => $agoAccountId,
+                    'total_account_id' => $totalAccountId,
                 ],
                 [
                     'id' => 4,
@@ -185,9 +190,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'amount' => round($pmsPrice * $GeneratorPms +  $agoPrice * $GeneratorAgo,2),
                     'pms_amount' => round($GeneratorPms,2),
                     'ago_amount' => round($GeneratorAgo,2),
-                    'ago_account_id' => "440200",
-                    'pms_account_id' => "440100",
-                    'total_account_id' => "103640",
+                    'ago_account_id' => $agoAccountId,
+                    'pms_account_id' => $agoAccountId,
+                    'total_account_id' => $totalAccountId,
                 ],
                 [
                     'id' => 5,
@@ -195,9 +200,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'amount' => round($pmsPrice * $VehiclePms +  $agoPrice * $VehicleAgo,2),
                     'pms_amount' => round($VehiclePms,2),
                     'ago_amount' => round($VehicleAgo,2),
-                    'ago_account_id' => "440200",
-                    'pms_account_id' => "440100",
-                    'total_account_id' => "103640",
+                    'ago_account_id' => $agoAccountId,
+                    'pms_account_id' => $agoAccountId,
+                    'total_account_id' => $totalAccountId,
                 ],
                 [
                     'id' => 6,
@@ -205,15 +210,15 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'amount' => round($pmsPrice * $ExpensePms + $agoPrice * $ExpenseAgo,2),
                     'pms_amount' => round($ExpensePms,2),
                     'ago_amount' => round($ExpenseAgo,2),
-                    'ago_account_id' => "440200",
-                    'pms_account_id' => "440100",
+                    'ago_account_id' => $agoAccountId,
+                    'pms_account_id' => $agoAccountId,
                     'total_account_id' => "102640",
                 ]
             ];
 
-           
 
-           
+
+
         }
 
         return $formData;
