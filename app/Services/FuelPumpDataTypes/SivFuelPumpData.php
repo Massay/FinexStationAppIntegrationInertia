@@ -37,9 +37,9 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
         $totalAccountId = "103640";
         $couponAccountId = "205225";
 
-        $generatorTotalAccountId = "103640";
+        $generatorTotalAccountId = "660301";
         $expenseTotalAccountId = "103640";
-        $vehiclesTotalAccountId = "103640";
+        $vehiclesTotalAccountId = "665301";
         $chequesTotalAccountId = "103640";
 
         // Default FormData templates
