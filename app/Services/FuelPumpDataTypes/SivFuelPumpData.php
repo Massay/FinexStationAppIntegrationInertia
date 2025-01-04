@@ -62,7 +62,7 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                 'ago_amount' => $coupon_sales,
                 'ago_account_id' => $agoAccountId,
                 'pms_account_id' => $pmsAccountId,
-                'total_account_id' => $totalAccountId,
+                'total_account_id' => $couponAccountId,
             ],
             [
                 'id' => 3,
@@ -186,7 +186,7 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'ago_amount' => round($ChequeAgoTotal,2),
                     'ago_account_id' => $agoAccountId,
                     'pms_account_id' => $pmsAccountId,
-                    'total_account_id' => $totalAccountId,
+                    'total_account_id' => $chequesTotalAccountId,
                 ],
                 [
                     'id' => 4,
@@ -196,7 +196,7 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'ago_amount' => round($GeneratorAgo,2),
                     'ago_account_id' => $agoAccountId,
                     'pms_account_id' => $pmsAccountId,
-                    'total_account_id' => $totalAccountId,
+                    'total_account_id' => $generatorTotalAccountId,
                 ],
                 [
                     'id' => 5,
@@ -206,7 +206,7 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'ago_amount' => round($VehicleAgo,2),
                     'ago_account_id' => $agoAccountId,
                     'pms_account_id' => $pmsAccountId,
-                    'total_account_id' => $totalAccountId,
+                    'total_account_id' => $vehiclesTotalAccountId,
                 ],
                 [
                     'id' => 6,
@@ -217,7 +217,7 @@ class SivFuelPumpData implements PullFuelPumpDataInterface
                     'ago_account_id' => $agoAccountId,
                     'pms_account_id' => $pmsAccountId,
                     // 'total_account_id' => "102640",
-                    'total_account_id' => $totalAccountId
+                    'total_account_id' => $expenseTotalAccountId
                 ]
             ];
 
