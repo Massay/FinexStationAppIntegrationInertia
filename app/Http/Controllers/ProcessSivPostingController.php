@@ -42,11 +42,15 @@ class ProcessSivPostingController extends Controller
 
         $mergeData = $this->sivDataMerger->merge($postings);
 
-      
-        $this->sivDataMerger->post($request, $mergeData);
 
-        return to_route('siv');
-       
+        $response = $this->sivDataMerger->post($request, $mergeData);
+
+        if($response['status']){
+            return to_route('siv');
+        }
+
+        abort(405, $response['error']);
+
     }
 
 }

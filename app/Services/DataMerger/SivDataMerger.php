@@ -31,7 +31,7 @@ class SivDataMerger implements DataMergerInterface
 
         $generatorSalesName = "Generator Sales";
 
-        $expenseSaleName  = "Expense Sale";
+        $expenseSaleName = "Expense Sale";
 
 
         foreach ($postings as $key => $item) {
@@ -245,105 +245,118 @@ class SivDataMerger implements DataMergerInterface
         $project = Project::where("Id", $request->project_id)->first();
 
         try {
-            DB::transaction(function () use ($request, $mergeData, $project) {
+            DB::beginTransaction();
 
-                $userName = auth()->user()->name;
+            //DB::transaction(function () use ($request, $mergeData, $project) {
 
-                foreach ($mergeData as $itemArray) {
+            $userName = auth()->user()->name;
 
-                    if (floatval($itemArray[0]['amount']) <= 0) {
+            foreach ($mergeData as $itemArray) {
+
+                if (floatval($itemArray[0]['amount']) <= 0) {
+                    continue;
+                }
+
+
+                $currentStockName = $itemArray[0]['name'];
+
+                $reference = AutoNum::where('Id', 'SIV')->latest('EditedBy')->first();
+                $number = $reference->Prefix . ($reference->NextNum + 1);
+
+
+                SaleTransaction::create([
+                    'type' => 'SIV',
+                    'sale_id' => $request->sale_id,
+                    'source_station_id' => $request->station_id,
+                    'reference' => $number,
+                    'date' => $request->date,
+                    'user_id' => auth()->id()
+                ]);
+                //Stock sales @ $project->Name IRO {$currentStockName} ($request->description)
+                SIV::create(
+                    [
+                        'IsBatched' => 1,
+                        'BatchNumber' => $request->batchNumber,
+                        'TxDate' => Carbon::parse($request->date)->format('Y-m-d'),
+                        'Descr' => " Stock Sold @ $project->Name in Respect to Cash, Coupon, Cheque, Vehicle and Generator Ref: ($request->description)",
+                        'TransType' => "SCSIV",
+                        'Customer' => '',
+                        'CurrencyId' => 'GMD',
+                        'DateCreated' => Carbon::now()->format('Y-m-d'),
+                        'CreatedBy' => auth()->user()->name,
+                        'FinYearId' => $request->year,
+                        'BatchNumber' => $request->batchNumber,
+                        'Reference' => $number
+                    ]
+                );
+
+                foreach ($itemArray as $item) {
+
+
+                    if ($item['stock_id'] == false) {
                         continue;
                     }
 
+                    $costPrice = ($item['stock_id'] == 'PMS') ? $request['unitPricePms'] : $request['unitPriceAgo'];
 
-                    $currentStockName = $itemArray[0]['name'];
-
-                    $reference = AutoNum::where('Id', 'SIV')->latest('EditedBy')->first();
-                    $number = $reference->Prefix . ($reference->NextNum + 1);
-
-
-                    SaleTransaction::create([
-                        'type' => 'SIV',
-                        'sale_id' => $request->sale_id,
-                        'source_station_id' => $request->station_id,
-                        'reference' => $number,
-                        'date' => $request->date,
-                        'user_id' => auth()->id()
+                    SIVDet::create([
+                        'StockId' => $item['stock_id'],
+                        'AccountId' => $item['account_id'],
+                        'BranchId' => $request->branch_id,
+                        'Descr' => $item['description'],
+                        'CostCenterId' => $request->project_id,
+                        'UnitOfMeasureId' => 'LTR',
+                        'SalesTaxRateId' => 'STD',
+                        'Quantity' => floatval($item['amount']),
+                        'CostPrice' => floatval($costPrice),
+                        'SellingPrice' => 0,
+                        'CostValue' => floatval($costPrice) * floatval($item['amount']),
+                        'SalesValue' => 1,
+                        'TCYNet' => 1,
+                        'TCYTax' => 1,
+                        'TCYDiscount' => 0,
+                        'OrigQuantity' => 0,
+                        'OrigCostPrice' => 0,
+                        'OrigCostValue' => 0,
+                        'OrigSellingPrice' => 0,
+                        'OrigSalesValue' => 0,
+                        'OrigTCYNet' => 0,
+                        'OrigExchRate' => 0,
+                        'OrigTCYTax' => 0,
+                        'OrigTCYDiscount' => 0,
+                        'CurrencyId' => 'GMD',
+                        'TCYAmount' => floatval($item['amount']),
+                        'ExchRate' => 1.00,
+                        'LCYAmount' => floatval($item['amount']),
+                        'Reference' => $number,
+                        'DateCreated' => Carbon::now()->format('Y-m-d'),
+                        'CreatedBy' => $userName
                     ]);
-//Stock sales @ $project->Name IRO {$currentStockName} ($request->description)
-                    SIV::create(
-                        [
-                            'IsBatched' => 1,
-                            'BatchNumber' => $request->batchNumber,
-                            'TxDate' => Carbon::parse($request->date)->format('Y-m-d'),
-                            'Descr' => " Stock Sold @ $project->Name in Respect to Cash, Coupon, Cheque, Vehicle and Generator Ref: ($request->description)",
-                            'TransType' => "SCSIV",
-                            'Customer' => '',
-                            'CurrencyId' => 'GMD',
-                            'DateCreated' => Carbon::now()->format('Y-m-d'),
-                            'CreatedBy' => auth()->user()->name,
-                            'FinYearId' => $request->year,
-                            'BatchNumber' => $request->batchNumber,
-                            'Reference' => $number
-                        ]
-                    );
-
-                    foreach ($itemArray as $item) {
-
-
-                        if ($item['stock_id'] == false) {
-                            continue;
-                        }
-
-                        $costPrice = ($item['stock_id'] == 'PMS') ? $request['unitPricePms'] : $request['unitPriceAgo'];
-
-                        SIVDet::create([
-                            'StockId' => $item['stock_id'],
-                            'AccountId' => $item['account_id'],
-                            'BranchId' => $request->branch_id,
-                            'Descr' => $item['description'],
-                            'CostCenterId' => $request->project_id,
-                            'UnitOfMeasureId' => 'LTR',
-                            'SalesTaxRateId' => 'STD',
-                            'Quantity' => floatval($item['amount']),
-                            'CostPrice' => floatval($costPrice),
-                            'SellingPrice' => 0,
-                            'CostValue' => floatval($costPrice) * floatval($item['amount']),
-                            'SalesValue' => 1,
-                            'TCYNet' => 1,
-                            'TCYTax' => 1,
-                            'TCYDiscount' => 0,
-                            'OrigQuantity' => 0,
-                            'OrigCostPrice' => 0,
-                            'OrigCostValue' => 0,
-                            'OrigSellingPrice' => 0,
-                            'OrigSalesValue' => 0,
-                            'OrigTCYNet' => 0,
-                            'OrigExchRate' => 0,
-                            'OrigTCYTax' => 0,
-                            'OrigTCYDiscount' => 0,
-                            'CurrencyId' => 'GMD',
-                            'TCYAmount' => floatval($item['amount']),
-                            'ExchRate' => 1.00,
-                            'LCYAmount' => floatval($item['amount']),
-                            'Reference' => $number,
-                            'DateCreated' => Carbon::now()->format('Y-m-d'),
-                            'CreatedBy' => $userName
-                        ]);
-                    }
-
-                    $reference->NextNum = $reference->NextNum + 1;
-                    $reference->EditedBy = $userName;
-                    $reference->save();
                 }
 
-                $mergeData = [];
-            });
+                $reference->NextNum = $reference->NextNum + 1;
+                $reference->EditedBy = $userName;
+                $reference->save();
+            }
 
+            $mergeData = [];
+            // });
+            DB::commit();
+            return [
+                'status' => true,
+            ];
 
 
         } catch (\Throwable $e) {
-            echo "Failed to create records: " . $e->getMessage();
+
+            DB::rollBack();
+
+
+
+            return [
+                'status' => false,
+                'error' => $e->getCode() . " Failed to create records: " . $e->getMessage(),
+            ];
         }
     }
 }
