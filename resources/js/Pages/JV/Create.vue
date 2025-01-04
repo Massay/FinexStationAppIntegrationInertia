@@ -9,8 +9,9 @@
         </template>
         <div class="max-w-[87%] mx-auto py-8">
             <!-- {{  selectedStation  }} -->
-               <!-- {{  selectedStation }} -->
-               <!-- {{ postForm }} -->
+            <!-- {{  selectedStation }} -->
+            <!-- {{ postForm }} -->
+              <!-- {{  year }} -->
             <form @submit.prevent.stop="submit" class="flex items-center justify-center gap-4 py-8">
                 <div>
                     <DatePicker v-model="form.date" placeholder="Pick a Date" showIcon fluid iconDisplay="input"
@@ -42,18 +43,18 @@
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Coupon Sale</h1>
 
-                            <CurrencyFormat :value="data['sales']['coupon_sales']"/>
+                            <CurrencyFormat :value="data['sales']['coupon_sales']" />
 
                         </div>
                         <div class="text-center bg-emerald-700 p-4  rounded-md text-gray-100 md:text-lg">
                             <h1>Cash Sale</h1>
 
-                            <CurrencyFormat :value="data['sales']['cash_sales']"/>
+                            <CurrencyFormat :value="data['sales']['cash_sales']" />
                         </div>
                         <div class="text-center bg-emerald-700 p-4 rounded-md text-gray-100 md:text-lg">
                             <h1>Cheque Sale</h1>
 
-                            <CurrencyFormat :value="data['sales']['checks']"/>
+                            <CurrencyFormat :value="data['sales']['checks']" />
                         </div>
                     </div>
                 </div>
@@ -189,8 +190,9 @@
                     </div>
 
                     <div class="flex justify-end">
-                        <button :disabled="postForm.processing"
-                            class=" text-gray-100 font-extrabold px-8 py-2" :class="{'bg-sky-700 text-gray-100': postForm.processing, 'bg-emerald-700': !postForm.processing}">{{ postForm.processing ? 'Loading':'Submit' }}</button>
+                        <button :disabled="postForm.processing" class=" text-gray-100 font-extrabold px-8 py-2"
+                            :class="{ 'bg-sky-700 text-gray-100': postForm.processing, 'bg-emerald-700': !postForm.processing }">{{
+                                postForm.processing ? 'Loading':'Submit' }}</button>
                     </div>
                     <ProgressSpinner v-if="postForm.processing" />
 
@@ -207,7 +209,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 import Select from 'primevue/select';
 import DatePicker from 'primevue/datepicker';
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance, onMounted } from 'vue';
 import CardSkeleton from '@/Components/Skeleton/CardSkeleton.vue';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useToast } from 'primevue/usetoast';
@@ -221,7 +223,7 @@ const props = defineProps({
     formData: Array,
     accounts: Array,
     projects: Array,
-    year: String,
+    year: Number,
     project_id: String,
     selectedStation: Object
 
@@ -240,7 +242,7 @@ const postForm = useForm({
     batchNumber: proxy.$page.props.auth.user.batchName,
     project_id: props?.project_id,
     date: props?.filters?.date || null,
-    year: props?.year || null,
+    year: props.year,
     description: null,
     sale_id: null,
     station_id: null,
@@ -248,6 +250,12 @@ const postForm = useForm({
 })
 
 
+
+// onMounted(() => {
+//     alert(props.year)
+
+//     // alert(postForm.year)
+// })
 
 
 function finalSubmit() {
@@ -289,6 +297,7 @@ function submit() {
             postForm.description = ""
             postForm.sale_id = data.props.data.sale_info['id']
             postForm.station_id = data.props.filters['station_id']
+            postForm.year = data.props.year;
 
         },
         onFinish: () => {

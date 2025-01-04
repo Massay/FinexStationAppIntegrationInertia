@@ -11,7 +11,8 @@ class ProcessJVPostingController extends Controller
 {
 
 
-    public function __construct(private JvDataMerger $jvDataMerger){
+    public function __construct(private JvDataMerger $jvDataMerger)
+    {
 
     }
 
@@ -34,15 +35,35 @@ class ProcessJVPostingController extends Controller
             ]
         ]);
 
-    
+
         $postings = $request->postings;
+
+
 
         $mergeData = $this->jvDataMerger->merge($postings);
 
-        $this->jvDataMerger->post($request, $mergeData);
-    
+        // dd($mergeData);
 
-        return to_route(route: 'jv');
-       
+
+        $response =  $response = $this->jvDataMerger->post($request, $mergeData);;
+
+
+        // dd($response);
+
+        if($response['status']){
+            return to_route(route: 'jv');
+        }
+
+
+        abort(405, $response['error']);
+
+
+
+
+
+        //return $response;
+
+        // return to_route(route: 'jv');
+
     }
 }

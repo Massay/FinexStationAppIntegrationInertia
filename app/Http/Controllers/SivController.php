@@ -32,11 +32,14 @@ class SivController extends Controller
         $fuelPrice = null;
         $selectedStation = null;
 
+        $date = Carbon::parse($request->date);
+        $year = $date->year;
+        //Carbon::parse($request->date)->year
 
         if ($request->filled('station_id') && $request->filled('date')) {
 
             $id = trim($request->station_id);
-            $date = Carbon::parse($request->date);
+
             // $data = $this->fuelPumpApiConnector->getDataByStation($id, $date);
 
             $data = $this->sivFuelPumpData->getData($date,$id);
@@ -45,21 +48,21 @@ class SivController extends Controller
                 $currentSaleId = $data['sale_info']['id'];
 
                 $exists = SaleTransaction::where('type','SIV')->where('sale_id', $currentSaleId)->exists();
-    
+
                 if($exists){
                     abort(403,"This Sale Transaction has already being entered");
                 }
             }
 
 
-            $year = $date->year;
+
             $month = $date->month;
             $fuelPrice = UnitPrice::where('month',$month)->where('year', $year)->first();
             $priceStructure = ['agoPrice' => $fuelPrice['ago'],'pmsPrice' => $fuelPrice['pms']];
             $formData = $this->sivFuelPumpData->getFields($data, $priceStructure, $data['price']);
             $selectedStation = Station::where('station_id', $request->station_id)->first();
 
-            
+
         }
 
         $accounts = Account::select('Id', 'Name')->get();
@@ -71,7 +74,7 @@ class SivController extends Controller
             'stations' =>fn () =>  $stations,
             'selectedStation' => $selectedStation,
             'data' => fn () => $data,
-            'year' => fn () => Carbon::parse($request->date)->format('Y'),
+            'year' => $year,
             'formData' => fn () => $formData,
             'projects' => fn () => $projects,
             'filters' => fn () => $request->only(['station_id', 'date']),

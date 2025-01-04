@@ -127,14 +127,19 @@ class JvDataMerger implements DataMergerInterface
 
         $project = Project::where("Id", $request->project_id)->first();
 
+
+
         try {
-            DB::transaction(function () use ($request, $mergeData,$project) {
+
+            DB::beginTransaction();
+
 
                 $userName = auth()->user()->name;
                 $reference = AutoNum::where('Id', 'JV')->first();
                 $number = $reference->Prefix . ($reference->NextNum + 1);
 
-                SaleTransaction::create([
+
+                $sale = SaleTransaction::create([
                     'type' => 'JV',
                     'sale_id' => $request->sale_id,
                     'source_station_id' => $request->station_id,
@@ -144,8 +149,7 @@ class JvDataMerger implements DataMergerInterface
 
                 ]);
 
-//Stock sales @ $project->Name IRO {$currentStockName} ($request->description)
-                Voucher::create(
+               $voucher =  Voucher::create(
                     [
                         'IsBatched' => 1,
                         'BatchNumber' => $request->batchNumber,
@@ -183,12 +187,22 @@ class JvDataMerger implements DataMergerInterface
                 $reference->EditedBy = $userName;
                 $reference->save();
                 $mergeData = [];
-            });
+        //    });
+        DB::commit();
 
+        return [
+            'status' => true,
+        ];
 
         } catch (\Throwable $e) {
 
-            echo "Failed to create records: " . $e->getMessage();
+            DB::rollBack();
+
+            return [
+                'status' => false,
+                'error' => $e->getCode() . " Failed to create records: " . $e->getMessage(),
+            ];
+
         }
     }
 }

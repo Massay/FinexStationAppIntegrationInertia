@@ -39,18 +39,16 @@ class JournalVoucherController extends Controller
         $projects = [];
         $stations = Station::select('station_id', 'name')->get();
 
+        $year = null;
 
-        if ($request->filled('station_id') && $request->filled('date')) {
+
+        if ($request->has('station_id') && $request->has('date')) {
 
             $id = trim($request->station_id);
             $date = Carbon::parse($request->date);
-
+            $year = $date->year;
             $data = $this->jvFuelPumpData->getData($date, $id);
-
-
-
             $currentSaleId = $data['sale_info']['id'];
-
             $exists = SaleTransaction::where('type', 'JV')->where('sale_id', $currentSaleId)->exists();
 
             if ($exists) {
@@ -71,24 +69,17 @@ class JournalVoucherController extends Controller
         }
 
 
-        $requestData = [];
-        if ($data) {
-            $request->merge(['partial' => true]);
-            $requestData = $request->only(['station_id', 'date', 'partial']);
-        } else {
-            $request->merge(['partial' => false]);
-            $requestData =  $request->only(['station_id', 'date', 'partial']);
+        // $request->merge(input: ['year' => $year]);
 
-        }
 
         return Inertia::render('JV/Create', [
             'stations' => fn() =>  $stations,
             'project_id' =>  $projectId,
             'data' => fn() => $data,
-            'year' => fn() => Carbon::parse($request->date)->format('Y'),
+            'year' => $year,
             'formData' => fn() => $formData,
             'projects' => fn() => $projects,
-            'filters' => fn() =>  $requestData,
+            'filters' => fn() =>  $request->only(['station_id', 'date', 'partial','year']),
             'accounts' => fn() => $accounts
         ]);
     }

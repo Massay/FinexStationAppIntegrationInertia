@@ -363,6 +363,7 @@ function submit() {
             postForm.description = ""
             postForm.sale_id = data.props.data.sale_info['id']
             postForm.station_id = data.props.filters['station_id']
+            postForm.year = data.props.year
             // postForm.station_id = data.props.filters.department_id
             // data.data = null
 
