@@ -33,6 +33,8 @@ class SivDataMerger implements DataMergerInterface
 
         $expenseSaleName = "Expense Sale";
 
+        // dd($postings);
+
 
         foreach ($postings as $key => $item) {
             $account = Account::where('Id', $item['total_account_id'])->first();
@@ -130,7 +132,7 @@ class SivDataMerger implements DataMergerInterface
             }
 
             //generator
-            if ($item['Name'] == 'generators') {
+            if ($item['Name'] == 'Generators') {
 
                 $checkData = [
                     [
@@ -164,7 +166,7 @@ class SivDataMerger implements DataMergerInterface
             }
 
             //Vehicles
-            if ($item['Name'] == 'vehicles') {
+            if ($item['Name'] == 'Vehicles') {
 
                 $checkData = [
                     [
@@ -199,7 +201,7 @@ class SivDataMerger implements DataMergerInterface
 
 
             //Expense
-            if ($item['Name'] == 'expenses') {
+            if ($item['Name'] == 'Expenses') {
 
                 $checkData = [
                     [
