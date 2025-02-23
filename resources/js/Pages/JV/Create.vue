@@ -268,7 +268,7 @@ function finalSubmit() {
         },
         onError: (error) => {
             console.error('error',error)
-                toast.add({ severity: 'error', summary: 'JV Creation Failed', detail: 'Error creating a JV', life: 3000 });
+            toast.add({ severity: 'error', summary: 'JV Creation Failed', detail: error, life: 3000 });
 
         },
         preserveScroll: true,

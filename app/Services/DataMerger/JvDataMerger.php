@@ -202,11 +202,13 @@ class JvDataMerger implements DataMergerInterface
 
         } catch (\Throwable $e) {
 
+
+           // $e->errorInfo[0]
             DB::rollBack();
 
             return [
                 'status' => false,
-                'error' => $e->getCode() . " Failed to create records: " . $e->getMessage(),
+                'error' =>$e->errorInfo[2],
             ];
 
         }

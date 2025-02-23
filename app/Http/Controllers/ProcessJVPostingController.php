@@ -42,17 +42,14 @@ class ProcessJVPostingController extends Controller
 
         $mergeData = $this->jvDataMerger->merge($postings);
 
-        // dd($mergeData);
-
-
         $response =  $response = $this->jvDataMerger->post($request, $mergeData);;
-
-
-        // dd($response);
 
         if($response['status']){
             return to_route(route: 'jv');
         }
+
+
+
 
         return back()->withErrors(['error' => $response['error']]);
         //abort(405, $response['error']);

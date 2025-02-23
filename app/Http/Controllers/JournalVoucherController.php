@@ -85,7 +85,6 @@ class JournalVoucherController extends Controller
             ]);
 
         } catch (Exception $e) {
-            //dd($e->getMessage());
             return back()->withErrors(['error' => $e->getMessage()]);
         }
 
