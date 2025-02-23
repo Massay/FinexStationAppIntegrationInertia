@@ -54,8 +54,8 @@ class ProcessJVPostingController extends Controller
             return to_route(route: 'jv');
         }
 
-
-        abort(405, $response['error']);
+        return back()->withErrors(['error' => $response['error']]);
+        //abort(405, $response['error']);
 
 
 

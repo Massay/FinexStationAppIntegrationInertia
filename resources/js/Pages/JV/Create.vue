@@ -32,9 +32,6 @@
             </div>
             <CardSkeleton v-if="form.processing" />
 
-
-
-
             <div class="p-4" v-if="!form.processing && data && data['sales'] != null">
 
                 <div class="my-2">
@@ -214,6 +211,7 @@ import CardSkeleton from '@/Components/Skeleton/CardSkeleton.vue';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useToast } from 'primevue/usetoast';
 import CurrencyFormat from '@/Components/CurrencyFormat.vue';
+
 const toast = useToast();
 
 const props = defineProps({
@@ -251,11 +249,6 @@ const postForm = useForm({
 
 
 
-// onMounted(() => {
-//     alert(props.year)
-
-//     // alert(postForm.year)
-// })
 
 
 function finalSubmit() {
@@ -272,9 +265,10 @@ function finalSubmit() {
             props.data = []
             form.reset()
             postForm.reset()
-
         },
         onError: (error) => {
+            console.error('error',error)
+                toast.add({ severity: 'error', summary: 'JV Creation Failed', detail: 'Error creating a JV', life: 3000 });
 
         },
         preserveScroll: true,
@@ -290,7 +284,6 @@ function submit() {
 
     form.get(url, {
         onSuccess: (data) => {
-            console.info("data", data)
             postForm.postings = data.props.formData
             postForm.project_id = data.props.project_id
             postForm.date = data.props.filters.date
@@ -298,14 +291,16 @@ function submit() {
             postForm.sale_id = data.props.data.sale_info['id']
             postForm.station_id = data.props.filters['station_id']
             postForm.year = data.props.year;
-
         },
         onFinish: () => {
             console.log("finish")
 
         },
         onError: (error) => {
-            console.error('error', error)
+            toast.add({ severity: 'error', summary: 'Error', detail: error['error'], life: 8000 });
+            props.data['sales'] = null
+            console.log('data',props.data['sales'])
+            postForm.reset()
 
         },
         preserveState: true,

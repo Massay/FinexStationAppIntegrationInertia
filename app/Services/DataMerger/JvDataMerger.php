@@ -30,6 +30,12 @@ class JvDataMerger implements DataMergerInterface
         $chequeSaleName = "Cheque Sales";
 
         foreach ($postings as $key => $item) {
+
+
+            //Added to check if it will stop allowing Amounts less than 0
+            if (floatval($item['amount']) <= 0) {
+                continue;
+            }
             $account = Account::where('Id', $item['total_account_id'])->first();
 
             if ($item['Name'] == 'Cash') {
