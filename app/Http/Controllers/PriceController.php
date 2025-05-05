@@ -50,7 +50,7 @@ class PriceController extends Controller
                     'message'  => $e->getMessage()
                 ]);
         }
-       
+
 
         return to_route('prices.index');
         // dd($request->all());
@@ -82,7 +82,7 @@ class PriceController extends Controller
     {
 
         $price = UnitPrice::findOrFail($id);
-        $price->update($request->only(['month','year','pms','go']));
+        $price->update($request->only(['month','year','pms','ago']));
 
 
         return redirect()->back();
