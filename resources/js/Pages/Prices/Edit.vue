@@ -9,17 +9,18 @@
         <div class="max-w-7xl mx-auto p-4">
             <!-- {{  price  }} -->
             <form @submit.prevent="update" class="flex flex-col gap-4">
+
                 <div>
-                    <input class="w-full rounded-md" type="text" v-model="form.month">
+                    <input class="w-full  rounded-md" placeholder="Year" type="number" v-model="form.year">
                 </div>
                 <div>
-                    <input class="w-full  rounded-md" type="text" v-model="form.year">
+                    <input class="w-full rounded-md" placeholder="Month" type="number" v-model="form.month">
                 </div>
                 <div>
-                    <input class="w-full rounded-md" type="text" v-model="form.ago">
+                    <input class="w-full rounded-md" placeholder="AGO" step="0.01" type="number" v-model="form.ago">
                 </div>
                 <div>
-                    <input class="w-full rounded-md" type="text" v-model="form.pms">
+                    <input class="w-full rounded-md" placeholder="PMS" step="0.01" type="number" v-model="form.pms">
                 </div>
                 <div class="flex justify-end items-center">
                     <button type="submit" class="px-8 py-2 bg-emerald-400 text-gray-100 rounded-md">Update</button>
